@@ -23,4 +23,112 @@ td,th{border:1px solid #ddd;padding:10px}
     </table>
     </div>
     </body></html>
-    
+    <html>
+<head>
+  <meta charset='utf-8'>
+  <title>AuraDrinks - Varianten</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f7; }
+    header { background: white; padding: 20px; text-align: center; border-bottom: 1px solid #ddd; }
+    nav a { margin: 0 10px; color: #1e3a8a; text-decoration: none; }
+    .container { max-width: 1000px; margin: auto; padding: 30px; }
+    h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
+ 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+ 
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+ 
+    .card:hover { transform: translateY(-4px); }
+ 
+    .card-header {
+      padding: 14px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+ 
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: contain;
+      display: block;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+ 
+    .card-body {
+      padding: 16px;
+    }
+ 
+    .card-body .price {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+ 
+    /* Kleuren per bidon */
+    .rood  .card-header { background: #dc2626; }
+    .groen .card-header { background: #16a34a; }
+    .blauw .card-header { background: #0284c7; }
+ 
+    .rood  .price { color: #dc2626; }
+    .groen .price { color: #16a34a; }
+    .blauw .price { color: #0284c7; }
+ 
+    .rood  { border-top: 4px solid #dc2626; }
+    .groen { border-top: 4px solid #16a34a; }
+    .blauw { border-top: 4px solid #0284c7; }
+  </style>
+</head>
+<body>
+ 
+<header>
+  <h1>AuraDrinks</h1>
+  <nav><a href='index.html'>← Terug naar home</a></nav>
+</header>
+ 
+<div class='container'>
+  <h2>Varianten</h2>
+  <div class='grid'>
+ 
+    <div class='card rood'>
+      <div class='card-header'>Rood</div>
+      <img src='images/bidon_rood.png' alt='Rode bidon'>
+      <div class='card-body'>
+        <div class='price'>€9,50</div>
+      </div>
+    </div>
+ 
+    <div class='card groen'>
+      <div class='card-header'>Groen</div>
+      <img src='images/bidon_groen.png' alt='Groene bidon'>
+      <div class='card-body'>
+        <div class='price'>€9,50</div>
+      </div>
+    </div>
+ 
+    <div class='card blauw'>
+      <div class='card-header'>Blauw</div>
+      <img src='images/bidon_blauw.png' alt='Blauwe bidon'>
+      <div class='card-body'>
+        <div class='price'>€9,50</div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+</body>
+</html>
+ 
