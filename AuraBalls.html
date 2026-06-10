@@ -22,5 +22,147 @@ td,th{border:1px solid #ddd;padding:10px}
     <tr><td>Honkbal</td><td>€5,50</td></tr><tr><td>Tennisbal</td><td>€9,50</td></tr><tr><td>Volleybal</td><td>€9,50</td></tr><tr><td>Voetbal</td><td>€10,50</td></tr><tr><td>Rugby</td><td>€13,50</td></tr><tr><td>Basketbal</td><td>€13,50</td></tr><tr><td>Yogabal</td><td>€15,50</td></tr>
     </table>
     </div>
-    </body></html>
-    
+    </body></html>"
+    <!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>AuraBalls - Varianten</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f7; }
+    header { background: white; padding: 20px; text-align: center; border-bottom: 1px solid #ddd; }
+    nav a { margin: 0 10px; color: #1e3a8a; text-decoration: none; }
+    .container { max-width: 1200px; margin: auto; padding: 30px; }
+    h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover { transform: translateY(-4px); }
+
+    .card-header {
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-body .price {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    /* Kleuren per bal */
+    .honkbal   .card-header { background: #b91c1c; } /* rood */
+    .tennisbal  .card-header { background: #65a30d; } /* geel-groen */
+    .volleybal  .card-header { background: #1d4ed8; } /* blauw */
+    .voetbal   .card-header { background: #1e3a8a; } /* donkerblauw */
+    .rugby     .card-header { background: #92400e; } /* bruin */
+    .basketbal  .card-header { background: #c2410c; } /* oranje */
+    .yogabal   .card-header { background: #6b7280; } /* grijs */
+
+    .honkbal   .price { color: #b91c1c; }
+    .tennisbal  .price { color: #65a30d; }
+    .volleybal  .price { color: #1d4ed8; }
+    .voetbal   .price { color: #1e3a8a; }
+    .rugby     .price { color: #92400e; }
+    .basketbal  .price { color: #c2410c; }
+    .yogabal   .price { color: #6b7280; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>AuraBalls</h1>
+  <nav><a href='index.html'>← Terug naar home</a></nav>
+</header>
+
+<div class='container'>
+  <h2>Varianten</h2>
+  <div class='grid'>
+
+    <div class='card honkbal'>
+      <div class='card-header'>Honkbal</div>
+      <img src='images/honkbal.png' alt='Honkbal'>
+      <div class='card-body'>
+        <div class='price'>€5,50</div>
+      </div>
+    </div>
+
+    <div class='card tennisbal'>
+      <div class='card-header'>Tennisbal</div>
+      <img src='images/tennisbal.png' alt='Tennisbal'>
+      <div class='card-body'>
+        <div class='price'>€9,50</div>
+      </div>
+    </div>
+
+    <div class='card volleybal'>
+      <div class='card-header'>Volleybal</div>
+      <img src='images/volleybal.png' alt='Volleybal'>
+      <div class='card-body'>
+        <div class='price'>€9,50</div>
+      </div>
+    </div>
+
+    <div class='card voetbal'>
+      <div class='card-header'>Voetbal</div>
+      <img src='images/voetbal.png' alt='Voetbal'>
+      <div class='card-body'>
+        <div class='price'>€10,50</div>
+      </div>
+    </div>
+
+    <div class='card rugby'>
+      <div class='card-header'>Rugby</div>
+      <img src='images/rugby.png' alt='Rugby'>
+      <div class='card-body'>
+        <div class='price'>€13,50</div>
+      </div>
+    </div>
+
+    <div class='card basketbal'>
+      <div class='card-header'>Basketbal</div>
+      <img src='images/basketbal.png' alt='Basketbal'>
+      <div class='card-body'>
+        <div class='price'>€13,50</div>
+      </div>
+    </div>
+
+    <div class='card yogabal'>
+      <div class='card-header'>Yogabal</div>
+      <img src='images/yogabal.png' alt='Yogabal'>
+      <div class='card-body'>
+        <div class='price'>€15,50</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
