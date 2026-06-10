@@ -7,7 +7,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #f7f7f7; color: #111; }
 
-    /* HEADER */
     header {
       background: white;
       padding: 16px 30px;
@@ -23,7 +22,6 @@
     nav a { margin: 0 12px; color: #1e3a8a; text-decoration: none; font-weight: bold; }
     nav a:hover { text-decoration: underline; }
 
-    /* WINKELMANDJE KNOP */
     .cart-btn {
       background: #1e3a8a;
       color: white;
@@ -45,7 +43,6 @@
       right: -6px;
     }
 
-    /* WINKELMANDJE OVERLAY */
     .cart-overlay {
       display: none;
       position: fixed;
@@ -68,15 +65,15 @@
       cursor: pointer;
       color: #888;
     }
-    .cart-items { margin-top: 20px; }
     .cart-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
       border-bottom: 1px solid #eee;
+      gap: 8px;
     }
-    .cart-item span { font-size: 0.95em; }
+    .cart-item span { font-size: 0.9em; flex: 1; }
     .cart-item button {
       background: #e11d48;
       color: white;
@@ -85,12 +82,7 @@
       padding: 4px 10px;
       cursor: pointer;
     }
-    .cart-total {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 1.1em;
-      text-align: right;
-    }
+    .cart-total { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: right; }
     .cart-checkout {
       display: block;
       width: 100%;
@@ -105,7 +97,6 @@
     }
     .cart-empty { color: #888; text-align: center; margin-top: 40px; }
 
-    /* HERO */
     .hero {
       background: linear-gradient(135deg, #1e3a8a, #3b82f6);
       color: white;
@@ -123,9 +114,7 @@
       font-weight: bold;
       font-size: 1em;
     }
-    .btn:hover { background: #f0f0f0; }
 
-    /* PRODUCTEN */
     #producten { padding: 50px 20px; }
     #producten h2 { text-align: center; color: #1e3a8a; font-size: 1.8em; margin-bottom: 30px; }
 
@@ -141,8 +130,6 @@
       background: white;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-decoration: none;
-      color: black;
       overflow: hidden;
       transition: transform 0.2s;
     }
@@ -150,20 +137,32 @@
     .card-top {
       background: #1e3a8a;
       color: white;
-      padding: 30px 20px;
+      padding: 24px 20px;
       text-align: center;
-      font-size: 1.4em;
+      font-size: 1.3em;
       font-weight: bold;
       letter-spacing: 1px;
+      text-decoration: none;
+      display: block;
     }
-    .card-body { padding: 18px; }
-    .card-body p { color: #555; margin: 4px 0; }
-    .card-price { font-size: 1.2em; font-weight: bold; color: #1e3a8a; margin-top: 8px; }
+    .card-body { padding: 16px; }
+    .card-body p { color: #555; margin: 4px 0; font-size: 0.95em; }
+    .card-price { font-size: 1.1em; font-weight: bold; color: #1e3a8a; margin-top: 8px; }
+
+    .variant-select {
+      width: 100%;
+      margin-top: 12px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95em;
+      color: #111;
+    }
 
     .add-to-cart {
       display: block;
       width: 100%;
-      margin-top: 12px;
+      margin-top: 10px;
       background: #1e3a8a;
       color: white;
       border: none;
@@ -174,7 +173,6 @@
     }
     .add-to-cart:hover { background: #1e40af; }
 
-    /* FOOTER */
     footer {
       background: #1e3a8a;
       color: white;
@@ -187,7 +185,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <h1>AURAFIT</h1>
   <nav>
@@ -200,7 +197,6 @@
   </button>
 </header>
 
-<!-- WINKELMANDJE -->
 <div class='cart-overlay' id='cart-overlay'>
   <button class='cart-close' onclick='toggleCart()'>✕</button>
   <h2>🛒 Winkelmandje</h2>
@@ -211,87 +207,98 @@
   <button class='cart-checkout' onclick='checkout()'>Afrekenen</button>
 </div>
 
-<!-- HERO -->
 <section class='hero'>
   <h1>Ontdek de kracht van Aurafit</h1>
   <p>Dé plek waar stijl en prestatie samenkomen.</p>
   <a class='btn' href='#producten'>Shop nu</a>
 </section>
 
-<!-- PRODUCTEN -->
 <section id='producten'>
   <h2>Onze Topcollectie</h2>
   <div class='grid'>
 
+    <!-- AURAGUNS -->
     <div class='card'>
-      <a href='AuraGuns.html' style='text-decoration:none;color:inherit'>
-        <div class='card-top'>AuraGuns</div>
-        <div class='card-body'>
-          <p>Massagepistolen voor optimaal herstel</p>
-          <p class='card-price'>Vanaf €40,00</p>
-        </div>
-      </a>
-      <div style='padding:0 18px 18px'>
-        <button class='add-to-cart' onclick='addToCart("AuraGun XS", 40)'>+ Voeg toe aan mandje</button>
+      <a class='card-top' href='AuraGuns.html'>AuraGuns</a>
+      <div class='card-body'>
+        <p>Massagepistolen voor optimaal herstel</p>
+        <select class='variant-select' id='select-auragun'>
+          <option value='XS|40'>XS — €40,00</option>
+          <option value='S|60'>S — €60,00</option>
+          <option value='M|80'>M — €80,00</option>
+          <option value='L|120'>L — €120,00</option>
+          <option value='XL|180'>XL — €180,00</option>
+        </select>
+        <button class='add-to-cart' onclick='addFromSelect("AuraGun", "select-auragun")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
 
+    <!-- SCHOENEN -->
     <div class='card'>
-      <a href='Schoenen.html' style='text-decoration:none;color:inherit'>
-        <div class='card-top'>Schoenen</div>
-        <div class='card-body'>
-          <p>Sportschoenen voor elk sport</p>
-          <p class='card-price'>Vanaf €40,00</p>
-        </div>
-      </a>
-      <div style='padding:0 18px 18px'>
-        <button class='add-to-cart' onclick='addToCart("Loopschoenen", 40)'>+ Voeg toe aan mandje</button>
+      <a class='card-top' href='Schoenen.html'>Schoenen</a>
+      <div class='card-body'>
+        <p>Sportschoenen voor elk sport</p>
+        <select class='variant-select' id='select-schoenen'>
+          <option value='Loopschoenen|40'>Loopschoenen — €40,00</option>
+          <option value='Volleybalschoenen|45'>Volleybal — €45,00</option>
+          <option value='Tennisschoenen|50'>Tennis — €50,00</option>
+          <option value='Voetbalschoenen|60'>Voetbal — €60,00</option>
+          <option value='Basketbalschoenen|70'>Basketbal — €70,00</option>
+          <option value='Honkbalschoenen|100'>Honkbal — €100,00</option>
+        </select>
+        <button class='add-to-cart' onclick='addFromSelect("Schoenen", "select-schoenen")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
 
+    <!-- AURABALLS -->
     <div class='card'>
-      <a href='AuraBalls.html' style='text-decoration:none;color:inherit'>
-        <div class='card-top'>AuraBalls</div>
-        <div class='card-body'>
-          <p>Ballen voor elk sport</p>
-          <p class='card-price'>Vanaf €5,50</p>
-        </div>
-      </a>
-      <div style='padding:0 18px 18px'>
-        <button class='add-to-cart' onclick='addToCart("Honkbal", 5.50)'>+ Voeg toe aan mandje</button>
+      <a class='card-top' href='AuraBalls.html'>AuraBalls</a>
+      <div class='card-body'>
+        <p>Ballen voor elk sport</p>
+        <select class='variant-select' id='select-balls'>
+          <option value='Honkbal|5.50'>Honkbal — €5,50</option>
+          <option value='Tennisbal|9.50'>Tennisbal — €9,50</option>
+          <option value='Volleybal|9.50'>Volleybal — €9,50</option>
+          <option value='Voetbal|10.50'>Voetbal — €10,50</option>
+          <option value='Rugbybal|13.50'>Rugby — €13,50</option>
+          <option value='Basketbal|13.50'>Basketbal — €13,50</option>
+          <option value='Yogabal|15.50'>Yogabal — €15,50</option>
+        </select>
+        <button class='add-to-cart' onclick='addFromSelect("AuraBall", "select-balls")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
 
+    <!-- AURASHIRTS -->
     <div class='card'>
-      <a href='AuraShirts.html' style='text-decoration:none;color:inherit'>
-        <div class='card-top'>AuraShirts</div>
-        <div class='card-body'>
-          <p>Sportshirts in 3 kleuren</p>
-          <p class='card-price'>€12,50</p>
-        </div>
-      </a>
-      <div style='padding:0 18px 18px'>
-        <button class='add-to-cart' onclick='addToCart("AuraShirt", 12.50)'>+ Voeg toe aan mandje</button>
+      <a class='card-top' href='AuraShirts.html'>AuraShirts</a>
+      <div class='card-body'>
+        <p>Sportshirts in 3 kleuren</p>
+        <select class='variant-select' id='select-shirts'>
+          <option value='Grijs|12.50'>Grijs — €12,50</option>
+          <option value='Blauw|12.50'>Blauw — €12,50</option>
+          <option value='Geel|12.50'>Geel — €12,50</option>
+        </select>
+        <button class='add-to-cart' onclick='addFromSelect("AuraShirt", "select-shirts")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
 
+    <!-- AURADRINKS -->
     <div class='card'>
-      <a href='AuraDrinks.html' style='text-decoration:none;color:inherit'>
-        <div class='card-top'>AuraDrinks</div>
-        <div class='card-body'>
-          <p>Sportbidons in 3 kleuren</p>
-          <p class='card-price'>€9,50</p>
-        </div>
-      </a>
-      <div style='padding:0 18px 18px'>
-        <button class='add-to-cart' onclick='addToCart("AuraDrink", 9.50)'>+ Voeg toe aan mandje</button>
+      <a class='card-top' href='AuraDrinks.html'>AuraDrinks</a>
+      <div class='card-body'>
+        <p>Sportbidons in 3 kleuren</p>
+        <select class='variant-select' id='select-drinks'>
+          <option value='Rood|9.50'>Rood — €9,50</option>
+          <option value='Groen|9.50'>Groen — €9,50</option>
+          <option value='Blauw|9.50'>Blauw — €9,50</option>
+        </select>
+        <button class='add-to-cart' onclick='addFromSelect("AuraDrink", "select-drinks")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2026 Aurafit — Alle rechten voorbehouden</p>
 </footer>
@@ -299,12 +306,15 @@
 <script>
   let cart = [];
 
-  function addToCart(name, price) {
+  function addFromSelect(product, selectId) {
+    const select = document.getElementById(selectId);
+    const [variant, price] = select.value.split('|');
+    const name = product + ' ' + variant;
     const existing = cart.find(i => i.name === name);
     if (existing) {
       existing.qty++;
     } else {
-      cart.push({ name, price, qty: 1 });
+      cart.push({ name, price: parseFloat(price), qty: 1 });
     }
     updateCart();
     toggleCart(true);
@@ -318,14 +328,12 @@
   function updateCart() {
     const count = cart.reduce((a, i) => a + i.qty, 0);
     document.getElementById('cart-count').textContent = count;
-
     const container = document.getElementById('cart-items');
     if (cart.length === 0) {
       container.innerHTML = "<p class='cart-empty'>Je winkelmandje is leeg.</p>";
       document.getElementById('cart-total').textContent = '';
       return;
     }
-
     container.innerHTML = cart.map((item, i) => `
       <div class='cart-item'>
         <span>${item.name} x${item.qty}</span>
@@ -333,9 +341,8 @@
         <button onclick='removeFromCart(${i})'>✕</button>
       </div>
     `).join('');
-
     const total = cart.reduce((a, i) => a + i.price * i.qty, 0);
-    document.getElementById('cart-total').textContent = `Totaal: €${total.toFixed(2)}`;
+    document.getElementById('cart-total').textContent = 'Totaal: €' + total.toFixed(2);
   }
 
   function toggleCart(forceOpen) {
@@ -359,5 +366,7 @@
   }
 </script>
 
+</body>
+</html>
 </body>
 </html>
