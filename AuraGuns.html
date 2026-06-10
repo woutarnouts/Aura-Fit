@@ -1,133 +1,150 @@
-<section class="container">
-  <h2>Onze AuraGun Massagepistolen</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>AuraGun - Varianten</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f7; }
+    header { background: white; padding: 20px; text-align: center; border-bottom: 1px solid #ddd; }
+    nav a { margin: 0 10px; color: #1e3a8a; text-decoration: none; }
+    .container { max-width: 1200px; margin: auto; padding: 30px; }
+    h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
 
-  <div class="grid">
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
 
-    <!-- XS -->
-    <article class="card xs">
-      <div class="card-header">AuraGun XS</div>
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
 
-      <img src="images/auragun_xs.png"
-           alt="AuraGun XS Massagepistool">
+    .card:hover { transform: translateY(-4px); }
 
-      <div class="card-body">
-        <p>Compact en lichtgewicht. Ideaal voor dagelijks gebruik.</p>
+    .card-header {
+      padding: 14px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+    }
 
-        <ul class="features">
-          <li>4 snelheden</li>
-          <li>4 opzetstukken</li>
-          <li>4 uur batterijduur</li>
-        </ul>
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      display: block;
+      padding: 16px;
+      box-sizing: border-box;
+      background: #f5f5f5;
+    }
 
-        <div class="price">€40,00</div>
+    .card-body {
+      padding: 16px;
+    }
 
-        <a href="auragun-xs.html" class="btn">
-          Bekijk model
-        </a>
+    .card-body .price {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    /* XS = compact zwart mini */
+    .xs  { border-top: 4px solid #111827; }
+    .xs  .card-header { background: #111827; }
+    .xs  .price { color: #111827; }
+
+    /* S = zwart met grip */
+    .s   { border-top: 4px solid #1f2937; }
+    .s   .card-header { background: #1f2937; }
+    .s   .price { color: #1f2937; }
+
+    /* M = blauwgroen */
+    .m   { border-top: 4px solid #0f766e; }
+    .m   .card-header { background: #0f766e; }
+    .m   .price { color: #0f766e; }
+
+    /* L = wit */
+    .l   { border-top: 4px solid #9ca3af; }
+    .l   .card-header { background: #9ca3af; }
+    .l   .price { color: #9ca3af; }
+
+    /* XL = driehoekig zwart */
+    .xl  { border-top: 4px solid #374151; }
+    .xl  .card-header { background: #374151; }
+    .xl  .price { color: #374151; }
+
+    .badge {
+      display: inline-block;
+      background: #b45309;
+      color: white;
+      font-size: 0.75em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>AuraGun</h1>
+  <nav><a href='index.html'>← Terug naar home</a></nav>
+</header>
+
+<div class='container'>
+  <h2>Massagepistolen</h2>
+  <div class='grid'>
+
+    <div class='card xs'>
+      <div class='card-header'>XS</div>
+      <img src='images/auragun_xs.png' alt='AuraGun XS'>
+      <div class='card-body'>
+        <div class='price'>€40,00</div>
       </div>
-    </article>
+    </div>
 
-    <!-- S -->
-    <article class="card s">
-      <div class="card-header">AuraGun S</div>
-
-      <img src="images/auragun_s.png"
-           alt="AuraGun S Massagepistool">
-
-      <div class="card-body">
-        <p>Meer kracht voor sporters en actieve gebruikers.</p>
-
-        <ul class="features">
-          <li>6 snelheden</li>
-          <li>6 opzetstukken</li>
-          <li>6 uur batterijduur</li>
-        </ul>
-
-        <div class="price">€60,00</div>
-
-        <a href="auragun-s.html" class="btn">
-          Bekijk model
-        </a>
+    <div class='card s'>
+      <div class='card-header'>S</div>
+      <img src='images/auragun_s.png' alt='AuraGun S'>
+      <div class='card-body'>
+        <div class='price'>€60,00</div>
       </div>
-    </article>
+    </div>
 
-    <!-- M -->
-    <article class="card m">
-      <div class="card-header">AuraGun M</div>
-
-      <img src="images/auragun_m.png"
-           alt="AuraGun M Massagepistool">
-
-      <div class="card-body">
-        <span class="badge">Populair</span>
-
-        <p>Perfecte balans tussen kracht en prijs.</p>
-
-        <ul class="features">
-          <li>8 snelheden</li>
-          <li>8 opzetstukken</li>
-          <li>8 uur batterijduur</li>
-        </ul>
-
-        <div class="price">€80,00</div>
-
-        <a href="auragun-m.html" class="btn">
-          Bekijk model
-        </a>
+    <div class='card m'>
+      <div class='card-header'>M</div>
+      <img src='images/auragun_m.png' alt='AuraGun M'>
+      <div class='card-body'>
+        <div class='price'>€80,00</div>
       </div>
-    </article>
+    </div>
 
-    <!-- L -->
-    <article class="card l">
-      <div class="card-header">AuraGun L</div>
-
-      <img src="images/auragun_l.png"
-           alt="AuraGun L Massagepistool">
-
-      <div class="card-body">
-        <p>Professionele prestaties voor intensief herstel.</p>
-
-        <ul class="features">
-          <li>10 snelheden</li>
-          <li>10 opzetstukken</li>
-          <li>10 uur batterijduur</li>
-        </ul>
-
-        <div class="price">€120,00</div>
-
-        <a href="auragun-l.html" class="btn">
-          Bekijk model
-        </a>
+    <div class='card l'>
+      <div class='card-header'>L</div>
+      <img src='images/auragun_l.png' alt='AuraGun L'>
+      <div class='card-body'>
+        <div class='price'>€120,00</div>
       </div>
-    </article>
+    </div>
 
-    <!-- XL -->
-    <article class="card xl">
-      <div class="card-header">AuraGun XL</div>
-
-      <img src="images/auragun_xl.png"
-           alt="AuraGun XL Massagepistool">
-
-      <div class="card-body">
-        <span class="badge bestseller">
-          ⭐ Bestseller
-        </span>
-
-        <p>Ons krachtigste model voor professioneel gebruik.</p>
-
-        <ul class="features">
-          <li>12 snelheden</li>
-          <li>12 opzetstukken</li>
-          <li>12 uur batterijduur</li>
-        </ul>
-
-        <div class="price">€180,00</div>
-
-        <a href="auragun-xl.html" class="btn">
-          Bestel nu
-        </a>
+    <div class='card xl'>
+      <div class='card-header'>XL</div>
+      <img src='images/auragun_xl.png' alt='AuraGun XL'>
+      <div class='card-body'>
+        <div class='badge'>⭐ Bestseller</div>
+        <div class='price'>€180,00</div>
       </div>
-    </article>
+    </div>
 
   </div>
-</section>
+</div>
+
+</body>
+</html>
