@@ -23,7 +23,8 @@
       align-items: center;
       gap: 12px;
     }
-    .header-logo img { height: 50px; width: 50px; object-fit: contain; }
+    /* Zorgt ervoor dat je logo mooi schaalt in de header */
+    .header-logo img { height: 50px; width: auto; object-fit: contain; }
     .header-logo span { color: white; font-size: 1.6em; font-weight: bold; letter-spacing: 4px; }
     nav a { margin: 0 12px; color: #aab4d4; text-decoration: none; font-weight: bold; }
     nav a:hover { color: white; }
@@ -74,7 +75,8 @@
     .hero { background: #0a0a0a; color: white; padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, #1e3a8a55 0%, transparent 70%); }
     .hero-content { position: relative; z-index: 1; }
-    .hero img { height: 120px; width: 120px; object-fit: contain; margin-bottom: 20px; }
+    /* Styling voor het grote logo in de banner */
+    .hero img { height: 120px; width: auto; object-fit: contain; margin-bottom: 20px; }
     .hero h1 { font-size: 2.5em; margin-bottom: 16px; letter-spacing: 4px; }
     .hero p { font-size: 1.2em; margin-bottom: 30px; opacity: 0.8; }
     .btn { background: #1e3a8a; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; border: 2px solid #3b82f6; }
@@ -93,14 +95,15 @@
     .add-to-cart:hover { background: #1e40af; }
 
     footer { background: #0a0a0a; color: #aab4d4; text-align: center; padding: 30px; margin-top: 60px; font-size: 0.9em; }
-    footer img { height: 40px; width: 40px; object-fit: contain; display: block; margin: 0 auto 10px; }
+    /* Styling voor het kleine logo in de footer */
+    footer img { height: 40px; width: auto; object-fit: contain; display: block; margin: 0 auto 10px; }
   </style>
 </head>
 <body>
 
 <header>
   <div class='header-logo'>
-    <img src='images.local.png' alt='Aurafit logo'>
+    <img src='logo.png' alt='Aurafit logo'>
     <span>AURAFIT</span>
   </div>
   <nav>
@@ -125,7 +128,7 @@
 
 <section class='hero'>
   <div class='hero-content'>
-    <img src='images.local.png' alt='Aurafit logo'>
+    <img src='logo.png' alt='Aurafit logo'>
     <h1>AURAFIT</h1>
     <p>Dé plek waar stijl en prestatie samenkomen.</p>
     <a class='btn' href='#producten'>Shop nu</a>
@@ -214,7 +217,7 @@
 </section>
 
 <footer>
-  <img src='images.local.png' alt='Aurafit logo'>
+  <img src='logo.png' alt='Aurafit logo'>
   <p>© 2026 Aurafit — Alle rechten voorbehouden. We zijn een website voor een schoolopdracht en verkopen niet echt producten</p>
 </footer>
 
