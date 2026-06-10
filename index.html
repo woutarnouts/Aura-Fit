@@ -100,12 +100,12 @@
 
 <header>
   <div class='header-logo'>
-    <img src='images/images.local.png' alt='Aurafit logo'>
+    <img src='images/image.logo.png' alt='Aurafit logo'>
     <span>AURAFIT</span>
   </div>
   <nav>
     <a href='index.html'>Home</a>
-    <a href='#producten'>Producten</a>
+    <a href='#' onclick='toggleOverzicht(event)'>Producten</a>
   </nav>
   <button class='cart-btn' onclick='toggleCart()'>
     🛒 Winkelmandje
@@ -124,10 +124,81 @@
 </div>
 
 <section class='hero'>
-  <div class='hero-content'><img src='images/images.local.png' alt='Aurafit logo'>
+  <div class='hero-content'>
+    <img src='images/image.logo.png' alt='Aurafit logo'>
     <h1>AURAFIT</h1>
     <p>Dé plek waar stijl en prestatie samenkomen.</p>
     <a class='btn' href='#producten'>Shop nu</a>
+  </div>
+</section>
+
+<section id='overzicht' style='background:#0a0a0a;color:white;padding:50px 20px;display:none;'>
+  <h2 style='text-align:center;color:white;font-size:1.8em;margin-bottom:40px;letter-spacing:2px;'>Productoverzicht</h2>
+
+  <div style='max-width:900px;margin:auto;display:flex;flex-direction:column;gap:32px;'>
+
+    <div>
+      <h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>🔫 AuraGuns</h3>
+      <table style='width:100%;border-collapse:collapse;color:white;'>
+        <tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Model</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>XS</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€40,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>S</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€60,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>M</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€80,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>L</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€120,00</td></tr>
+        <tr><td style='padding:8px 12px;'>XL</td><td style='padding:8px 12px;text-align:right;'>€180,00</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>👟 Schoenen</h3>
+      <table style='width:100%;border-collapse:collapse;color:white;'>
+        <tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Type</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Loopschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€40,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Volleybalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€45,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Tennisschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€50,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Voetbalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€60,00</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Basketbalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€70,00</td></tr>
+        <tr><td style='padding:8px 12px;'>Honkbalschoenen</td><td style='padding:8px 12px;text-align:right;'>€100,00</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>⚽ AuraBalls</h3>
+      <table style='width:100%;border-collapse:collapse;color:white;'>
+        <tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Type</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Honkbal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€5,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Tennisbal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€9,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Volleybal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€9,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Voetbal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€10,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Rugbybal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€13,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Basketbal</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€13,50</td></tr>
+        <tr><td style='padding:8px 12px;'>Yogabal</td><td style='padding:8px 12px;text-align:right;'>€15,50</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>👕 AuraShirts</h3>
+      <table style='width:100%;border-collapse:collapse;color:white;'>
+        <tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Kleur</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Grijs</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€12,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Blauw</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€12,50</td></tr>
+        <tr><td style='padding:8px 12px;'>Geel</td><td style='padding:8px 12px;text-align:right;'>€12,50</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>🥤 AuraDrinks</h3>
+      <table style='width:100%;border-collapse:collapse;color:white;'>
+        <tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Kleur</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Rood</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€9,50</td></tr>
+        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Groen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€9,50</td></tr>
+        <tr><td style='padding:8px 12px;'>Blauw</td><td style='padding:8px 12px;text-align:right;'>€9,50</td></tr>
+      </table>
+    </div>
+
+  </div>
+  <div style='text-align:center;margin-top:40px;'>
+    <a class='btn' href='#producten'>Bestel nu</a>
   </div>
 </section>
 
@@ -213,8 +284,8 @@
 </section>
 
 <footer>
-    <img src='images/images.local.png' alt='Aurafit logo'>
-  <p>© 2026 Aurafit — Alle rechten voorbehouden. We zijn een bedrijf voor een schoolopdracht en verkopen dus niet echt producten</p>
+  <img src='images/image.logo.png' alt='Aurafit logo'>
+  <p>© 2026 Aurafit — Alle rechten voorbehouden</p>
 </footer>
 
 <script>
@@ -287,6 +358,17 @@
   }
 
   updateCart();
+
+  function toggleOverzicht(e) {
+    e.preventDefault();
+    const overzicht = document.getElementById('overzicht');
+    if (overzicht.style.display === 'none') {
+      overzicht.style.display = 'block';
+      overzicht.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      overzicht.style.display = 'none';
+    }
+  }
 </script>
 
 </body>
