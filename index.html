@@ -67,6 +67,9 @@
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; gap: 8px; }
     .cart-item span { font-size: 0.9em; flex: 1; }
     .cart-item button { background: #e11d48; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #1e3a8a; color: white; border: none; border-radius: 6px; padding: 2px 8px; cursor: pointer; font-size: 1em; }
+    .qty-num { min-width: 20px; text-align: center; font-size: 0.9em; }
     .cart-total { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: right; }
     .cart-checkout { display: block; width: 100%; margin-top: 16px; background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; cursor: pointer; }
     .cart-empty { color: #888; text-align: center; margin-top: 40px; }
@@ -320,6 +323,13 @@
     updateCart();
   }
 
+  function changeQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    saveCart();
+    updateCart();
+  }
+
   function updateCart() {
     const count = cart.reduce((a, i) => a + i.qty, 0);
     document.getElementById('cart-count').textContent = count;
@@ -331,7 +341,12 @@
     }
     container.innerHTML = cart.map((item, i) => `
       <div class='cart-item'>
-        <span>${item.name} x${item.qty}</span>
+        <span>${item.name}</span>
+        <div class='qty-controls'>
+          <button class='qty-btn' onclick='changeQty(${i}, -1)'>−</button>
+          <span class='qty-num'>${item.qty}</span>
+          <button class='qty-btn' onclick='changeQty(${i}, 1)'>+</button>
+        </div>
         <span>€${(item.price * item.qty).toFixed(2)}</span>
         <button onclick='removeFromCart(${i})'>✕</button>
       </div>
