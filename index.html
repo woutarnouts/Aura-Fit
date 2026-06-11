@@ -26,8 +26,26 @@
     .qty-controls { display: flex; align-items: center; gap: 6px; }
     .qty-btn { background: #1e3a8a; color: white; border: none; border-radius: 6px; padding: 2px 8px; cursor: pointer; font-size: 1em; }
     .qty-num { min-width: 20px; text-align: center; font-size: 0.9em; }
-    .cart-total { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: right; }
+    .cart-total { margin-top: 16px; font-size: 0.95em; text-align: right; color: #555; }
+    .cart-total-final { margin-top: 6px; font-weight: bold; font-size: 1.1em; text-align: right; color: #111; }
+    .cart-discount-row { margin-top: 4px; font-size: 0.9em; text-align: right; color: #16a34a; font-weight: bold; }
+
+    /* Kortingscode sectie */
+    .coupon-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 16px; }
+    .coupon-section label { display: block; font-size: 0.85em; color: #555; margin-bottom: 6px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; }
+    .coupon-row { display: flex; gap: 8px; }
+    .coupon-input { flex: 1; padding: 9px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.9em; outline: none; text-transform: uppercase; transition: border-color 0.2s; }
+    .coupon-input:focus { border-color: #1e3a8a; }
+    .coupon-apply-btn { background: #1e3a8a; color: white; border: none; padding: 9px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85em; font-weight: bold; white-space: nowrap; transition: background 0.2s; }
+    .coupon-apply-btn:hover { background: #1e40af; }
+    .coupon-msg { margin-top: 7px; font-size: 0.85em; min-height: 18px; }
+    .coupon-msg.success { color: #16a34a; }
+    .coupon-msg.error { color: #e11d48; }
+    .coupon-badge { display: inline-block; background: #dcfce7; color: #16a34a; border: 1px solid #86efac; border-radius: 20px; padding: 3px 10px; font-size: 0.8em; font-weight: bold; margin-top: 6px; }
+    .coupon-remove { background: none; border: none; color: #e11d48; cursor: pointer; font-size: 1em; margin-left: 6px; vertical-align: middle; }
+
     .cart-checkout { display: block; width: 100%; margin-top: 16px; background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; cursor: pointer; }
+    .cart-checkout:hover { background: #1e40af; }
     .cart-empty { color: #888; text-align: center; margin-top: 40px; }
     .hero { background: #0a0a0a; color: white; padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, #1e3a8a55 0%, transparent 70%); }
@@ -75,7 +93,21 @@
   <button class='cart-close' onclick='toggleCart()'>✕</button>
   <h2>🛒 Winkelmandje</h2>
   <div class='cart-items' id='cart-items'><p class='cart-empty'>Je winkelmandje is leeg.</p></div>
-  <div class='cart-total' id='cart-total'></div>
+
+  <!-- Kortingscode -->
+  <div class='coupon-section' id='coupon-section'>
+    <label>Kortingscode</label>
+    <div class='coupon-row'>
+      <input class='coupon-input' id='coupon-input' type='text' placeholder='bv. AURAFIT2026' maxlength='20'>
+      <button class='coupon-apply-btn' onclick='applyCoupon()'>Toepassen</button>
+    </div>
+    <div class='coupon-msg' id='coupon-msg'></div>
+    <div id='coupon-active'></div>
+  </div>
+
+  <div class='cart-total' id='cart-subtotal'></div>
+  <div class='cart-discount-row' id='cart-discount-row'></div>
+  <div class='cart-total-final' id='cart-total'></div>
   <button class='cart-checkout' onclick='checkout()'>Afrekenen</button>
 </div>
 
@@ -162,21 +194,120 @@
 </footer>
 
 <script>
+  const COUPONS = {
+    'AURAFIT2026': { discount: 0.35, label: '35% korting' }
+  };
+
   let cart = JSON.parse(localStorage.getItem('aurafit-cart') || '[]');
+  let appliedCoupon = null;
+
   function saveCart() { localStorage.setItem('aurafit-cart', JSON.stringify(cart)); }
+
   function removeFromCart(i) { cart.splice(i,1); saveCart(); updateCart(); }
   function changeQty(i, d) { cart[i].qty += d; if(cart[i].qty<=0) cart.splice(i,1); saveCart(); updateCart(); }
+
+  function applyCoupon() {
+    const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+    const msgEl = document.getElementById('coupon-msg');
+    const activeEl = document.getElementById('coupon-active');
+
+    if (!code) {
+      msgEl.textContent = 'Vul een kortingscode in.';
+      msgEl.className = 'coupon-msg error';
+      return;
+    }
+    if (COUPONS[code]) {
+      appliedCoupon = { code, ...COUPONS[code] };
+      msgEl.textContent = '✓ Kortingscode toegepast!';
+      msgEl.className = 'coupon-msg success';
+      activeEl.innerHTML = `<span class='coupon-badge'>🏷️ ${code} — ${appliedCoupon.label}</span><button class='coupon-remove' onclick='removeCoupon()' title='Verwijder code'>✕</button>`;
+      document.getElementById('coupon-input').value = '';
+      document.getElementById('coupon-input').disabled = true;
+      document.querySelector('.coupon-apply-btn').disabled = true;
+      document.querySelector('.coupon-apply-btn').style.opacity = '0.4';
+    } else {
+      appliedCoupon = null;
+      msgEl.textContent = '✗ Ongeldige kortingscode.';
+      msgEl.className = 'coupon-msg error';
+      activeEl.innerHTML = '';
+    }
+    updateCart();
+  }
+
+  function removeCoupon() {
+    appliedCoupon = null;
+    document.getElementById('coupon-msg').textContent = '';
+    document.getElementById('coupon-msg').className = 'coupon-msg';
+    document.getElementById('coupon-active').innerHTML = '';
+    document.getElementById('coupon-input').disabled = false;
+    document.querySelector('.coupon-apply-btn').disabled = false;
+    document.querySelector('.coupon-apply-btn').style.opacity = '1';
+    updateCart();
+  }
+
+  // Allow pressing Enter in coupon input
+  document.addEventListener('DOMContentLoaded', function() {
+    const inp = document.getElementById('coupon-input');
+    if (inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter') applyCoupon(); });
+  });
+
   function updateCart() {
     const count = cart.reduce((a,i)=>a+i.qty,0);
     document.getElementById('cart-count').textContent = count;
     const container = document.getElementById('cart-items');
-    if(cart.length===0){ container.innerHTML="<p class='cart-empty'>Je winkelmandje is leeg.</p>"; document.getElementById('cart-total').textContent=''; return; }
+
+    if(cart.length===0){
+      container.innerHTML="<p class='cart-empty'>Je winkelmandje is leeg.</p>";
+      document.getElementById('cart-subtotal').textContent='';
+      document.getElementById('cart-discount-row').textContent='';
+      document.getElementById('cart-total').textContent='';
+      document.getElementById('coupon-section').style.display='none';
+      return;
+    }
+
+    document.getElementById('coupon-section').style.display='block';
+
     container.innerHTML = cart.map((item,i)=>`<div class='cart-item'><span>${item.name}</span><div class='qty-controls'><button class='qty-btn' onclick='changeQty(${i},-1)'>−</button><span class='qty-num'>${item.qty}</span><button class='qty-btn' onclick='changeQty(${i},1)'>+</button></div><span>€${(item.price*item.qty).toFixed(2)}</span><button onclick='removeFromCart(${i})'>✕</button></div>`).join('');
-    document.getElementById('cart-total').textContent = 'Totaal: €' + cart.reduce((a,i)=>a+i.price*i.qty,0).toFixed(2);
+
+    const subtotal = cart.reduce((a,i)=>a+i.price*i.qty,0);
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const discountEl = document.getElementById('cart-discount-row');
+    const totalEl = document.getElementById('cart-total');
+
+    if (appliedCoupon) {
+      const discountAmt = subtotal * appliedCoupon.discount;
+      const finalTotal = subtotal - discountAmt;
+      subtotalEl.textContent = 'Subtotaal: €' + subtotal.toFixed(2);
+      discountEl.textContent = `🏷️ Korting (${Math.round(appliedCoupon.discount*100)}%): −€${discountAmt.toFixed(2)}`;
+      totalEl.textContent = 'Totaal: €' + finalTotal.toFixed(2);
+    } else {
+      subtotalEl.textContent = '';
+      discountEl.textContent = '';
+      totalEl.textContent = 'Totaal: €' + subtotal.toFixed(2);
+    }
   }
+
   function toggleCart(f){ const o=document.getElementById('cart-overlay'); if(f) o.classList.add('open'); else o.classList.toggle('open'); }
-  function checkout(){ if(cart.length===0){alert('Je winkelmandje is leeg!');return;} localStorage.setItem('aurafit-last-order',JSON.stringify(cart)); alert('Bedankt voor je bestelling! 🎉\nWe nemen snel contact op.'); cart=[];saveCart();updateCart();toggleCart(); }
+
+  function checkout(){
+    if(cart.length===0){alert('Je winkelmandje is leeg!');return;}
+    const subtotal = cart.reduce((a,i)=>a+i.price*i.qty,0);
+    const finalTotal = appliedCoupon ? subtotal*(1-appliedCoupon.discount) : subtotal;
+    const orderData = { items: cart, coupon: appliedCoupon ? appliedCoupon.code : null, total: finalTotal };
+    localStorage.setItem('aurafit-last-order', JSON.stringify(orderData));
+    let msg = 'Bedankt voor je bestelling! 🎉\n';
+    if(appliedCoupon) msg += `Kortingscode ${appliedCoupon.code} toegepast (${Math.round(appliedCoupon.discount*100)}% korting).\nJe betaalt €${finalTotal.toFixed(2)}.\n`;
+    msg += 'We nemen snel contact op.';
+    alert(msg);
+    cart=[];
+    removeCoupon();
+    saveCart();
+    updateCart();
+    toggleCart();
+  }
+
   function toggleOverzicht(e){ e.preventDefault(); const el=document.getElementById('overzicht'); el.style.display=el.style.display==='block'?'none':'block'; if(el.style.display==='block') el.scrollIntoView({behavior:'smooth'}); }
+
   updateCart();
 </script>
 </body>
