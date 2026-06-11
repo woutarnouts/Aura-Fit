@@ -162,11 +162,22 @@
   function submitRetour() {
     const checked = [...document.querySelectorAll('input[type=checkbox]:checked')].map(c => c.value);
     const reason = document.getElementById('reason').value;
+    if (checked.length === 0) {
+      alert('Selecteer minstens één product om te retourneren.');
+      return;
+    }
     if (!reason) {
       alert('Selecteer een reden voor de retour.');
       return;
     }
-    localStorage.removeItem('aurafit-last-order');
+    // Verwijder geretourneerde items uit laatste bestelling
+    let lastOrder = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
+    lastOrder = lastOrder.filter(item => !checked.includes(item.name));
+    if (lastOrder.length === 0) {
+      localStorage.removeItem('aurafit-last-order');
+    } else {
+      localStorage.setItem('aurafit-last-order', JSON.stringify(lastOrder));
+    }
     document.getElementById('reason-box').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
   }
