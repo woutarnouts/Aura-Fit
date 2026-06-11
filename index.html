@@ -107,10 +107,13 @@
     <a href='index.html'>Home</a>
     <a href='#' onclick='toggleOverzicht(event)'>Producten</a>
   </nav>
-  <button class='cart-btn' onclick='toggleCart()'>
-    🛒 Winkelmandje
-    <span class='badge' id='cart-count'>0</span>
-  </button>
+  <div style='display:flex;gap:10px;align-items:center;'>
+    <a href='retour.html' style='background:#374151;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:1em;'>↺ Retour</a>
+    <button class='cart-btn' onclick='toggleCart()'>
+      🛒 Winkelmandje
+      <span class='badge' id='cart-count'>0</span>
+    </button>
+  </div>
 </header>
 
 <div class='cart-overlay' id='cart-overlay'>
