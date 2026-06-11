@@ -166,6 +166,7 @@
       alert('Selecteer een reden voor de retour.');
       return;
     }
+    localStorage.removeItem('aurafit-last-order');
     document.getElementById('reason-box').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
   }
