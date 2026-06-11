@@ -1,29 +1,4 @@
-
-    <html><head><meta charset='utf-8'><title>AuraShirts</title>
-<style>
-body{font-family:Arial,sans-serif;margin:0;background:#f7f7f7}
-header{background:white;padding:20px;text-align:center;border-bottom:1px solid #ddd}
-nav a{margin:0 10px;color:#1e3a8a;text-decoration:none}
-.hero{padding:90px 20px;text-align:center;background:#dfe4ea}
-.btn{background:#1e3a8a;color:white;padding:12px 20px;border-radius:6px;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:30px;max-width:1200px;margin:auto}
-.card{background:white;padding:20px;border-radius:10px;text-decoration:none;color:black;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-table{border-collapse:collapse;width:100%;background:white}
-td,th{border:1px solid #ddd;padding:10px}
-.container{max-width:1000px;margin:auto;padding:20px}
-</style>
-</head>
-    <body>
-    <header><h1>AuraShirts</h1><nav><a href='index.html'>← Terug naar home</a></nav></header>
-    <div class='container'>
-    <h2>Varianten</h2>
-    <table>
-    <tr><th>Variant</th><th>Prijs</th></tr>
-    <tr><td>Grijs</td><td>€12,50</td></tr><tr><td>Blauw</td><td>€12,50</td></tr><tr><td>Geel</td><td>€12,50</td></tr>
-    </table>
-    </div>
-    </body></html>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset='utf-8'>
@@ -34,102 +9,75 @@ td,th{border:1px solid #ddd;padding:10px}
     nav a { margin: 0 10px; color: #1e3a8a; text-decoration: none; }
     .container { max-width: 1000px; margin: auto; padding: 30px; }
     h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; text-align: center; transition: transform 0.2s; }
     .card:hover { transform: translateY(-4px); }
-
-    .card-header {
-      padding: 14px;
-      color: white;
-      font-weight: bold;
-      font-size: 1.1em;
-    }
-
-    .card img {
-      width: 100%;
-      height: 240px;
-      object-fit: contain;
-      display: block;
-      padding: 10px;
-      box-sizing: border-box;
-      background: #f0f0f0;
-    }
-
-    .card-body {
-      padding: 16px;
-    }
-
-    .card-body .price {
-      font-size: 1.3em;
-      font-weight: bold;
-      margin-top: 6px;
-    }
-
-    /* Kleuren per shirt */
+    .card-header { padding: 14px; color: white; font-weight: bold; font-size: 1.1em; }
+    .card img { width: 100%; height: 240px; object-fit: contain; display: block; padding: 10px; box-sizing: border-box; background: #f0f0f0; }
+    .card-body { padding: 16px; }
+    .card-body .price { font-size: 1.3em; font-weight: bold; margin-top: 6px; margin-bottom: 12px; }
+    .size-select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; color: #111; margin-bottom: 10px; }
+    .add-btn { display: block; width: 100%; background: #1e3a8a; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.95em; }
+    .add-btn:hover { background: #1e40af; }
     .grijs .card-header { background: #4b5563; }
     .blauw .card-header { background: #0284c7; }
     .geel  .card-header { background: #ca8a04; }
-
     .grijs .price { color: #4b5563; }
     .blauw .price { color: #0284c7; }
     .geel  .price { color: #ca8a04; }
-
     .grijs { border-top: 4px solid #4b5563; }
     .blauw { border-top: 4px solid #0284c7; }
     .geel  { border-top: 4px solid #ca8a04; }
   </style>
 </head>
 <body>
-
 <header>
   <h1>AuraShirts</h1>
   <nav><a href='index.html'>← Terug naar home</a></nav>
 </header>
-
 <div class='container'>
   <h2>Varianten</h2>
   <div class='grid'>
-
     <div class='card grijs'>
       <div class='card-header'>Grijs</div>
       <img src='images/shirt_grijs.png' alt='Grijs shirt'>
       <div class='card-body'>
         <div class='price'>€12,50</div>
+        <select class='size-select' id='size-grijs'><option value=''>— Kies maat —</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+        <button class='add-btn' onclick='addToCart("AuraShirt Grijs", 12.50, "size-grijs")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
-
     <div class='card blauw'>
       <div class='card-header'>Blauw</div>
       <img src='images/shirt_blauw.png' alt='Blauw shirt'>
       <div class='card-body'>
         <div class='price'>€12,50</div>
+        <select class='size-select' id='size-blauw'><option value=''>— Kies maat —</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+        <button class='add-btn' onclick='addToCart("AuraShirt Blauw", 12.50, "size-blauw")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
-
     <div class='card geel'>
       <div class='card-header'>Geel</div>
       <img src='images/shirt_geel.png' alt='Geel shirt'>
       <div class='card-body'>
         <div class='price'>€12,50</div>
+        <select class='size-select' id='size-geel'><option value=''>— Kies maat —</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+        <button class='add-btn' onclick='addToCart("AuraShirt Geel", 12.50, "size-geel")'>+ Voeg toe aan mandje</button>
       </div>
     </div>
-
   </div>
 </div>
-
+<script>
+  function addToCart(product, price, sizeId) {
+    const size = document.getElementById(sizeId).value;
+    if (!size) { alert('Kies eerst een maat!'); return; }
+    let cart = JSON.parse(localStorage.getItem('aurafit-cart') || '[]');
+    const name = product + ' (maat ' + size + ')';
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
+    localStorage.setItem('aurafit-cart', JSON.stringify(cart));
+    alert(name + ' toegevoegd aan je mandje! 🛒');
+  }
+</script>
 </body>
 </html>
