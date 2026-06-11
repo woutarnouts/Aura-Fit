@@ -1,62 +1,130 @@
-<html><head><meta charset='utf-8'><title>AuraGun</title>
-<style>
-body{font-family:Arial,sans-serif;margin:0;background:#f7f7f7}
-header{background:white;padding:20px;text-align:center;border-bottom:1px solid #ddd}
-nav a{margin:0 10px;color:#1e3a8a;text-decoration:none}
-.container{max-width:1200px;margin:auto;padding:20px}
-h2{text-align:center;color:#1e3a8a;margin-bottom:30px}
-table{border-collapse:collapse;width:100%;background:white;margin-bottom:40px}
-td,th{border:1px solid #ddd;padding:10px;text-align:left}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:white;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.1);overflow:hidden;text-align:center}
-.card-header{padding:14px;color:white;font-weight:bold;font-size:1.1em}
-.card img{width:100%;height:220px;object-fit:contain;background:#f5f5f5;padding:10px;box-sizing:border-box}
-
-.xs .card-header{background:#111827} .xs{border-top:4px solid #111827}
-.s  .card-header{background:#1f2937} .s {border-top:4px solid #1f2937}
-.m  .card-header{background:#0f766e} .m {border-top:4px solid #0f766e}
-.l  .card-header{background:#9ca3af} .l {border-top:4px solid #9ca3af}
-.xl .card-header{background:#374151} .xl{border-top:4px solid #374151}
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>AuraGuns - Aurafit</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f7f7f7; color: #111; }
+    header { background: #0a0a0a; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #1e3a8a; position: sticky; top: 0; z-index: 100; }
+    .header-logo { display: flex; align-items: center; gap: 12px; }
+    .header-logo img { height: 50px; width: 50px; object-fit: contain; }
+    nav a { margin: 0 12px; color: #aab4d4; text-decoration: none; font-weight: bold; }
+    nav a:hover { color: white; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .retour-btn { background: #374151; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; }
+    .retour-btn:hover { background: #4b5563; }
+    .cart-btn { background: #1e3a8a; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 1em; position: relative; }
+    .cart-btn .badge { background: #e11d48; color: white; border-radius: 50%; font-size: 0.7em; padding: 2px 6px; position: absolute; top: -6px; right: -6px; }
+    .cart-overlay { display: none; position: fixed; top: 0; right: 0; width: 350px; height: 100%; background: white; box-shadow: -4px 0 20px rgba(0,0,0,0.2); z-index: 200; padding: 24px; overflow-y: auto; }
+    .cart-overlay.open { display: block; }
+    .cart-overlay h2 { color: #1e3a8a; margin-bottom: 20px; }
+    .cart-close { float: right; background: none; border: none; font-size: 1.5em; cursor: pointer; color: #888; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; gap: 8px; }
+    .cart-item span { font-size: 0.9em; flex: 1; }
+    .cart-item button { background: #e11d48; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #1e3a8a; color: white; border: none; border-radius: 6px; padding: 2px 8px; cursor: pointer; font-size: 1em; }
+    .qty-num { min-width: 20px; text-align: center; font-size: 0.9em; }
+    .cart-total { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: right; }
+    .cart-checkout { display: block; width: 100%; margin-top: 16px; background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; cursor: pointer; }
+    .cart-empty { color: #888; text-align: center; margin-top: 40px; }
+    .page-hero { background: #0a0a0a; color: white; padding: 40px 20px; text-align: center; border-bottom: 3px solid #1e3a8a; }
+    .page-hero h1 { font-size: 2em; letter-spacing: 4px; margin-bottom: 8px; }
+    .page-hero p { color: #aab4d4; }
+    .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
+    .section-title { color: #1e3a8a; font-size: 1.4em; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+    .variant-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 40px; }
+    .variant-table th { background: #1e3a8a; color: white; padding: 12px 16px; text-align: left; font-size: 0.95em; }
+    .variant-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.95em; vertical-align: middle; }
+    .variant-table tr:last-child td { border-bottom: none; }
+    .variant-table tr:hover td { background: #f0f4ff; }
+    .add-btn { background: #1e3a8a; color: white; border: none; padding: 8px 18px; border-radius: 7px; cursor: pointer; font-size: 0.9em; white-space: nowrap; }
+    .add-btn:hover { background: #1e40af; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.2s; text-align: center; }
+    .card:hover { transform: translateY(-4px); }
+    .card-header { background: #1e3a8a; color: white; padding: 14px; font-weight: bold; font-size: 1.1em; }
+    .card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .card-body { padding: 16px; }
+    .price { font-size: 1.3em; font-weight: bold; color: #1e3a8a; margin: 8px 0 14px; }
+    .card-add-btn { display: block; width: 100%; background: #1e3a8a; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.95em; }
+    .card-add-btn:hover { background: #1e40af; }
+    footer { background: #0a0a0a; color: #aab4d4; text-align: center; padding: 30px; margin-top: 60px; font-size: 0.9em; }
+    footer img { height: 40px; width: 40px; object-fit: contain; display: block; margin: 0 auto 10px; }
+  </style>
 </head>
 <body>
-<header><h1>AuraGun</h1><nav><a href='index.html'>← Terug naar home</a></nav></header>
+<header>
+  <div class='header-logo'><img src='images/images.logo.png' alt='Aurafit logo'></div>
+  <nav>
+    <a href='index.html'>← Terug naar home</a>
+  </nav>
+  <div class='header-actions'>
+    <a class='retour-btn' href='retour.html'>↺ Retour</a>
+    <button class='cart-btn' onclick='toggleCart()'>🛒 Winkelmandje <span class='badge' id='cart-count'>0</span></button>
+  </div>
+</header>
+
+<div class='cart-overlay' id='cart-overlay'>
+  <button class='cart-close' onclick='toggleCart()'>✕</button>
+  <h2>🛒 Winkelmandje</h2>
+  <div class='cart-items' id='cart-items'><p class='cart-empty'>Je winkelmandje is leeg.</p></div>
+  <div class='cart-total' id='cart-total'></div>
+  <button class='cart-checkout' onclick='checkout()'>Afrekenen</button>
+</div>
+
+<div class='page-hero'>
+  <h1>🔫 AURAGUNS</h1>
+  <p>Massagepistolen voor optimaal herstel na elke training</p>
+</div>
+
 <div class='container'>
-<h2>Varianten</h2>
+  <h2 class='section-title'>Alle varianten</h2>
+  <table class='variant-table'>
+    <thead><tr><th>Model</th><th>Prijs</th></tr></thead>
+    <tbody>
+      <tr><td>XS</td><td>€40,00</td></tr>
+      <tr><td>S</td><td>€60,00</td></tr>
+      <tr><td>M</td><td>€80,00</td></tr>
+      <tr><td>L</td><td>€120,00</td></tr>
+      <tr><td>XL</td><td>€180,00</td></tr>
+    </tbody>
+  </table>
 
-<table>
-<tr><th>Variant</th><th>Prijs</th></tr>
-<tr><td>XS</td><td>€40,00</td></tr>
-<tr><td>S</td><td>€60,00</td></tr>
-<tr><td>M</td><td>€80,00</td></tr>
-<tr><td>L</td><td>€120,00</td></tr>
-<tr><td>XL</td><td>€180,00</td></tr>
-</table>
-
-<div class='grid'>
-  <div class='card xs'>
-    <div class='card-header'>XS</div>
-    <img src='images/auragun_xs.png' alt='AuraGun XS'>
-  </div>
-  <div class='card s'>
-    <div class='card-header'>S</div>
-    <img src='images/auragun_s.png' alt='AuraGun S'>
-  </div>
-  <div class='card m'>
-    <div class='card-header'>M</div>
-    <img src='images/auragun_m.png' alt='AuraGun M'>
-  </div>
-  <div class='card l'>
-    <div class='card-header'>L</div>
-    <img src='images/auragun_l.png' alt='AuraGun L'>
-  </div>
-  <div class='card xl'>
-    <div class='card-header'>XL</div>
-    <img src='images/auragun_xl.png' alt='AuraGun XL'>
+  <h2 class='section-title'>Bekijk per model</h2>
+  <div class='grid'>
+    <div class='card'><div class='card-header'>XS</div><img src='images/auragun_xs.png' alt='AuraGun XS'><div class='card-body'><div class='price'>€40,00</div><button class='card-add-btn' onclick="addToCart('AuraGun XS', 40)">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card'><div class='card-header'>S</div><img src='images/auragun_s.png' alt='AuraGun S'><div class='card-body'><div class='price'>€60,00</div><button class='card-add-btn' onclick="addToCart('AuraGun S', 60)">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card'><div class='card-header'>M</div><img src='images/auragun_m.png' alt='AuraGun M'><div class='card-body'><div class='price'>€80,00</div><button class='card-add-btn' onclick="addToCart('AuraGun M', 80)">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card'><div class='card-header'>L</div><img src='images/auragun_l.png' alt='AuraGun L'><div class='card-body'><div class='price'>€120,00</div><button class='card-add-btn' onclick="addToCart('AuraGun L', 120)">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card'><div class='card-header'>XL</div><img src='images/auragun_xl.png' alt='AuraGun XL'><div class='card-body'><div class='price'>€180,00</div><button class='card-add-btn' onclick="addToCart('AuraGun XL', 180)">+ Voeg toe aan winkelmandje</button></div></div>
   </div>
 </div>
 
-</div>
-</body></html>
+<footer><img src='images/images.logo.png' alt='Aurafit logo'><p>© 2026 Aurafit — Alle rechten voorbehouden</p></footer>
+<script>
+  let cart = JSON.parse(localStorage.getItem('aurafit-cart') || '[]');
+  function saveCart(){ localStorage.setItem('aurafit-cart', JSON.stringify(cart)); }
+  function addToCart(name, price){
+    const ex = cart.find(i=>i.name===name);
+    if(ex){ ex.qty++; } else { cart.push({name, price, qty:1}); }
+    saveCart(); updateCart();
+    document.getElementById('cart-overlay').classList.add('open');
+  }
+  function removeFromCart(i){ cart.splice(i,1); saveCart(); updateCart(); }
+  function changeQty(i,d){ cart[i].qty+=d; if(cart[i].qty<=0) cart.splice(i,1); saveCart(); updateCart(); }
+  function updateCart(){
+    const count=cart.reduce((a,i)=>a+i.qty,0);
+    document.getElementById('cart-count').textContent=count;
+    const c=document.getElementById('cart-items');
+    if(cart.length===0){c.innerHTML="<p class='cart-empty'>Je winkelmandje is leeg.</p>";document.getElementById('cart-total').textContent='';return;}
+    c.innerHTML=cart.map((item,i)=>`<div class='cart-item'><span>${item.name}</span><div class='qty-controls'><button class='qty-btn' onclick='changeQty(${i},-1)'>−</button><span class='qty-num'>${item.qty}</span><button class='qty-btn' onclick='changeQty(${i},1)'>+</button></div><span>€${(item.price*item.qty).toFixed(2)}</span><button onclick='removeFromCart(${i})'>✕</button></div>`).join('');
+    document.getElementById('cart-total').textContent='Totaal: €'+cart.reduce((a,i)=>a+i.price*i.qty,0).toFixed(2);
+  }
+  function toggleCart(){ document.getElementById('cart-overlay').classList.toggle('open'); }
+  function checkout(){ if(cart.length===0){alert('Je winkelmandje is leeg!');return;} localStorage.setItem('aurafit-last-order',JSON.stringify(cart)); alert('Bedankt voor je bestelling! 🎉\nWe nemen snel contact op.'); cart=[];saveCart();updateCart();document.getElementById('cart-overlay').classList.remove('open'); }
+  updateCart();
+</script>
 </body>
 </html>
