@@ -43,6 +43,7 @@
     .order-item input[type='checkbox'] { width: 18px; height: 18px; accent-color: #1e3a8a; cursor: pointer; }
     .order-item label { flex: 1; font-size: 0.95em; cursor: pointer; }
     .order-item .item-price { color: #888; font-size: 0.9em; }
+    .qty-select { padding: 4px 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; color: #111; }
 
     .empty-msg { color: #888; text-align: center; padding: 20px 0; }
 
@@ -136,18 +137,25 @@
 </footer>
 
 <script>
-  const lastOrder = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
-  const container = document.getElementById('order-items');
-
-  if (lastOrder.length === 0) {
-    container.innerHTML = "<p class='empty-msg'>Geen eerdere bestelling gevonden.</p>";
-  } else {
-    lastOrder.forEach((item, i) => {
+  function renderItems() {
+    const order = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
+    const container = document.getElementById('order-items');
+    container.innerHTML = '';
+    if (order.length === 0) {
+      container.innerHTML = "<p class='empty-msg'>Geen eerdere bestelling gevonden.</p>";
+      document.getElementById('reason-box').style.display = 'none';
+      return;
+    }
+    order.forEach((item, i) => {
+      const options = Array.from({length: item.qty}, (_, n) => `<option value='${n+1}'>${n+1}</option>`).join('');
       const div = document.createElement('div');
       div.className = 'order-item';
       div.innerHTML = `
-        <input type='checkbox' id='item-${i}' value='${item.name}' onchange='checkSelection()'>
-        <label for='item-${i}'>${item.name} x${item.qty}</label>
+        <input type='checkbox' id='item-${i}' data-index='${i}' data-name='${item.name}' data-qty='${item.qty}' onchange='checkSelection()'>
+        <label for='item-${i}'>${item.name} (${item.qty}x)</label>
+        <select class='qty-select' id='qty-${i}' style='display:none;'>
+          ${options}
+        </select>
         <span class='item-price'>€${(item.price * item.qty).toFixed(2)}</span>
       `;
       container.appendChild(div);
@@ -155,14 +163,19 @@
   }
 
   function checkSelection() {
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach(cb => {
+      const qtySelect = document.getElementById('qty-' + cb.dataset.index);
+      if (qtySelect) qtySelect.style.display = cb.checked ? 'inline-block' : 'none';
+    });
     const checked = document.querySelectorAll('input[type=checkbox]:checked');
     document.getElementById('reason-box').style.display = checked.length > 0 ? 'block' : 'none';
   }
 
   function submitRetour() {
-    const checked = [...document.querySelectorAll('input[type=checkbox]:checked')].map(c => c.value);
+    const checkboxes = [...document.querySelectorAll('input[type=checkbox]:checked')];
     const reason = document.getElementById('reason').value;
-    if (checked.length === 0) {
+    if (checkboxes.length === 0) {
       alert('Selecteer minstens één product om te retourneren.');
       return;
     }
@@ -170,17 +183,27 @@
       alert('Selecteer een reden voor de retour.');
       return;
     }
-    // Verwijder geretourneerde items uit laatste bestelling
-    let lastOrder = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
-    lastOrder = lastOrder.filter(item => !checked.includes(item.name));
-    if (lastOrder.length === 0) {
+    let order = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
+    checkboxes.forEach(cb => {
+      const name = cb.dataset.name;
+      const retourQty = parseInt(document.getElementById('qty-' + cb.dataset.index).value);
+      const item = order.find(i => i.name === name);
+      if (item) {
+        item.qty -= retourQty;
+      }
+    });
+    order = order.filter(item => item.qty > 0);
+    if (order.length === 0) {
       localStorage.removeItem('aurafit-last-order');
     } else {
-      localStorage.setItem('aurafit-last-order', JSON.stringify(lastOrder));
+      localStorage.setItem('aurafit-last-order', JSON.stringify(order));
     }
     document.getElementById('reason-box').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
+    renderItems();
   }
+
+  renderItems();
 </script>
 
 </body>
