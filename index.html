@@ -30,7 +30,6 @@
     .cart-total-final { margin-top: 6px; font-weight: bold; font-size: 1.1em; text-align: right; color: #111; }
     .cart-discount-row { margin-top: 4px; font-size: 0.9em; text-align: right; color: #16a34a; font-weight: bold; }
 
-    /* Kortingscode sectie */
     .coupon-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 16px; display: block !important; }
     .coupon-section label { display: block; font-size: 0.85em; color: #555; margin-bottom: 6px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; }
     .coupon-row { display: flex; gap: 8px; }
@@ -65,8 +64,54 @@
     .card-body p { color: #555; margin: 4px 0 14px; font-size: 0.95em; }
     .bekijk-btn { display: block; width: 100%; background: #1e3a8a; color: white; border: none; padding: 11px; border-radius: 8px; cursor: pointer; font-size: 0.95em; font-weight: bold; text-align: center; text-decoration: none; }
     .bekijk-btn:hover { background: #1e40af; }
+
+    /* ── Overzicht ── */
     #overzicht { background: #0a0a0a; color: white; padding: 50px 20px; display: none; }
     #overzicht h2 { text-align: center; color: white; font-size: 1.8em; margin-bottom: 40px; letter-spacing: 2px; }
+
+    .overzicht-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .ov-card {
+      background: #141414;
+      border: 1px solid #1e3a8a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .ov-card-header {
+      background: #1e3a8a;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .ov-card-header .icon { font-size: 1.3em; }
+
+    .ov-table { width: 100%; border-collapse: collapse; }
+    .ov-table tr:nth-child(even) { background: #1a1a1a; }
+    .ov-table td { padding: 10px 20px; font-size: 0.9em; color: #ccc; border-bottom: 1px solid #222; }
+    .ov-table td:last-child { text-align: right; color: #60a5fa; font-weight: bold; }
+    .ov-table tr:last-child td { border-bottom: none; }
+    .ov-table .sub-label { color: #888; font-size: 0.78em; display: block; margin-top: 2px; }
+
+    .ov-card-footer { padding: 16px 20px; border-top: 1px solid #1e3a8a; text-align: center; }
+    .ov-link { color: #60a5fa; text-decoration: none; font-size: 0.9em; font-weight: bold; }
+    .ov-link:hover { color: #93c5fd; text-decoration: underline; }
+
+    .overzicht-close-row { text-align: center; margin-top: 36px; }
+    .overzicht-close-btn { background: #374151; color: white; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold; }
+    .overzicht-close-btn:hover { background: #4b5563; }
+
     footer { background: #0a0a0a; color: #aab4d4; text-align: center; padding: 30px; margin-top: 60px; font-size: 0.9em; }
     footer img { height: 40px; width: 40px; object-fit: contain; display: block; margin: 0 auto 10px; }
   </style>
@@ -94,7 +139,6 @@
   <h2>🛒 Winkelmandje</h2>
   <div class='cart-items' id='cart-items'><p class='cart-empty'>Je winkelmandje is leeg.</p></div>
 
-  <!-- Kortingscode -->
   <div class='coupon-section' id='coupon-section'>
     <label>Kortingscode</label>
     <div class='coupon-row'>
@@ -120,30 +164,81 @@
   </div>
 </section>
 
+<!-- ── Volledig productoverzicht ── -->
 <section id='overzicht'>
   <h2>Productoverzicht</h2>
-  <div style='max-width:900px;margin:auto;display:flex;flex-direction:column;gap:32px;'>
-    <div><h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>🔫 AuraGuns</h3>
-      <table style='width:100%;border-collapse:collapse;color:white;'><tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Model</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>XS</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€40,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>S</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€60,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>M</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€80,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>L</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€120,00</td></tr>
-        <tr><td style='padding:8px 12px;'>XL</td><td style='padding:8px 12px;text-align:right;'>€180,00</td></tr>
+
+  <div class='overzicht-grid'>
+
+    <!-- AuraGuns -->
+    <div class='ov-card'>
+      <div class='ov-card-header'><span class='icon'>🔫</span> AuraGuns</div>
+      <table class='ov-table'>
+        <tr><td>XS<span class='sub-label'>Compact model</span></td><td>€40,00</td></tr>
+        <tr><td>S<span class='sub-label'>Lichtgewicht</span></td><td>€60,00</td></tr>
+        <tr><td>M<span class='sub-label'>Standaard</span></td><td>€80,00</td></tr>
+        <tr><td>L<span class='sub-label'>Professioneel</span></td><td>€120,00</td></tr>
+        <tr><td>XL<span class='sub-label'>Elite model</span></td><td>€180,00</td></tr>
       </table>
+      <div class='ov-card-footer'><a class='ov-link' href='AuraGuns.html'>→ Bekijk alle varianten</a></div>
     </div>
-    <div><h3 style='color:#3b82f6;font-size:1.2em;margin-bottom:10px;border-bottom:1px solid #1e3a8a;padding-bottom:6px;'>👟 AuraShoes</h3>
-      <table style='width:100%;border-collapse:collapse;color:white;'><tr style='background:#1a1a1a;'><th style='padding:8px 12px;text-align:left;'>Type</th><th style='padding:8px 12px;text-align:right;'>Prijs</th></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Loopschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€40,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Volleybalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€45,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Tennisschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€50,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Voetbalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€60,00</td></tr>
-        <tr><td style='padding:8px 12px;border-bottom:1px solid #222;'>Basketbalschoenen</td><td style='padding:8px 12px;text-align:right;border-bottom:1px solid #222;'>€70,00</td></tr>
-        <tr><td style='padding:8px 12px;'>Honkbalschoenen</td><td style='padding:8px 12px;text-align:right;'>€100,00</td></tr>
+
+    <!-- AuraShoes -->
+    <div class='ov-card'>
+      <div class='ov-card-header'><span class='icon'>👟</span> AuraShoes</div>
+      <table class='ov-table'>
+        <tr><td>Loopschoenen</td><td>€40,00</td></tr>
+        <tr><td>Volleybalschoenen</td><td>€45,00</td></tr>
+        <tr><td>Tennisschoenen</td><td>€50,00</td></tr>
+        <tr><td>Voetbalschoenen</td><td>€60,00</td></tr>
+        <tr><td>Basketbalschoenen</td><td>€70,00</td></tr>
+        <tr><td>Honkbalschoenen</td><td>€100,00</td></tr>
       </table>
+      <div class='ov-card-footer'><a class='ov-link' href='AuraShoes.html'>→ Bekijk alle varianten</a></div>
     </div>
+
+    <!-- AuraBalls -->
+    <div class='ov-card'>
+      <div class='ov-card-header'><span class='icon'>⚽</span> AuraBalls</div>
+      <table class='ov-table'>
+        <tr><td>Voetbal</td><td>€25,00</td></tr>
+        <tr><td>Basketbal</td><td>€30,00</td></tr>
+        <tr><td>Volleybal</td><td>€28,00</td></tr>
+        <tr><td>Tennisbal (3-pack)</td><td>€8,00</td></tr>
+        <tr><td>Honkbal</td><td>€15,00</td></tr>
+        <tr><td>Rugby bal</td><td>€32,00</td></tr>
+      </table>
+      <div class='ov-card-footer'><a class='ov-link' href='AuraBalls.html'>→ Bekijk alle varianten</a></div>
+    </div>
+
+    <!-- AuraShirts -->
+    <div class='ov-card'>
+      <div class='ov-card-header'><span class='icon'>👕</span> AuraShirts</div>
+      <table class='ov-table'>
+        <tr><td>Wit<span class='sub-label'>Maten: XS – XL</span></td><td>€22,00</td></tr>
+        <tr><td>Zwart<span class='sub-label'>Maten: XS – XL</span></td><td>€22,00</td></tr>
+        <tr><td>Blauw<span class='sub-label'>Maten: XS – XL</span></td><td>€22,00</td></tr>
+      </table>
+      <div class='ov-card-footer'><a class='ov-link' href='AuraShirts.html'>→ Bekijk alle varianten</a></div>
+    </div>
+
+    <!-- AuraDrinks -->
+    <div class='ov-card'>
+      <div class='ov-card-header'><span class='icon'>🥤</span> AuraDrinks</div>
+      <table class='ov-table'>
+        <tr><td>Wit<span class='sub-label'>500 ml</span></td><td>€18,00</td></tr>
+        <tr><td>Zwart<span class='sub-label'>500 ml</span></td><td>€18,00</td></tr>
+        <tr><td>Blauw<span class='sub-label'>500 ml</span></td><td>€18,00</td></tr>
+      </table>
+      <div class='ov-card-footer'><a class='ov-link' href='AuraDrinks.html'>→ Bekijk alle varianten</a></div>
+    </div>
+
   </div>
-  <div style='text-align:center;margin-top:40px;'><a class='btn' href='#producten'>Bestel nu</a></div>
+
+  <div class='overzicht-close-row'>
+    <button class='overzicht-close-btn' onclick='toggleOverzicht(event)'>✕ Sluiten</button>
+    <div style='margin-top:24px;'><a class='btn' href='#producten'>Bestel nu</a></div>
+  </div>
 </section>
 
 <section id='producten'>
@@ -245,7 +340,6 @@
     updateCart();
   }
 
-  // Allow pressing Enter in coupon input
   document.addEventListener('DOMContentLoaded', function() {
     const inp = document.getElementById('coupon-input');
     if (inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter') applyCoupon(); });
@@ -303,7 +397,13 @@
     toggleCart();
   }
 
-  function toggleOverzicht(e){ e.preventDefault(); const el=document.getElementById('overzicht'); el.style.display=el.style.display==='block'?'none':'block'; if(el.style.display==='block') el.scrollIntoView({behavior:'smooth'}); }
+  function toggleOverzicht(e) {
+    if (e) e.preventDefault();
+    const el = document.getElementById('overzicht');
+    const isOpen = el.style.display === 'block';
+    el.style.display = isOpen ? 'none' : 'block';
+    if (!isOpen) el.scrollIntoView({ behavior: 'smooth' });
+  }
 
   updateCart();
 </script>
