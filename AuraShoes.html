@@ -10,9 +10,13 @@
     .container { max-width: 1200px; margin: auto; padding: 30px; }
     h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
 
+    table { border-collapse: collapse; width: 100%; background: white; margin-bottom: 40px; }
+    td, th { border: 1px solid #ddd; padding: 10px; }
+    th { background: #1e3a8a; color: white; }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 24px;
     }
 
@@ -28,7 +32,7 @@
     .card:hover { transform: translateY(-4px); }
 
     .card-header {
-      padding: 14px;
+      padding: 16px;
       color: white;
       font-weight: bold;
       font-size: 1.1em;
@@ -36,30 +40,13 @@
 
     .card img {
       width: 100%;
-      height: 200px;
-      object-fit: contain;
+      height: 220px;
+      object-fit: cover;
       display: block;
-      padding: 12px;
-      box-sizing: border-box;
-      background: #f5f5f5;
     }
 
-    .card-body {
-      padding: 16px;
-    }
-
-    .card-body .price {
-      font-size: 1.3em;
-      font-weight: bold;
-      margin-top: 6px;
-    }
-
-    .loopschoenen { border-top: 4px solid #6b7280; }
-    .volleybal    { border-top: 4px solid #ca8a04; }
-    .tennis       { border-top: 4px solid #16a34a; }
-    .voetbal      { border-top: 4px solid #e11d48; }
-    .basketbal    { border-top: 4px solid #ea580c; }
-    .honkbal      { border-top: 4px solid #1e3a8a; }
+    .card-body { padding: 16px; }
+    .card-body .price { font-size: 1.3em; font-weight: bold; margin-top: 8px; }
 
     .loopschoenen .card-header { background: #6b7280; }
     .volleybal    .card-header { background: #ca8a04; }
@@ -85,54 +72,53 @@
 
 <div class='container'>
   <h2>Varianten</h2>
+
+  <table>
+    <tr><th>Variant</th><th>Prijs</th></tr>
+    <tr><td>Loopschoenen</td><td>€40,00</td></tr>
+    <tr><td>Volleybalschoenen</td><td>€45,00</td></tr>
+    <tr><td>Tennisschoenen</td><td>€50,00</td></tr>
+    <tr><td>Voetbalschoenen</td><td>€60,00</td></tr>
+    <tr><td>Basketbalschoenen</td><td>€70,00</td></tr>
+    <tr><td>Honkbalschoenen</td><td>€100,00</td></tr>
+  </table>
+
   <div class='grid'>
 
     <div class='card loopschoenen'>
       <div class='card-header'>Loopschoenen</div>
       <img src='images/schoen_loop.png' alt='Loopschoenen'>
-      <div class='card-body'>
-        <div class='price'>€40,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€40,00</div></div>
     </div>
 
     <div class='card volleybal'>
-      <div class='card-header'>Volleybal</div>
+      <div class='card-header'>Volleybalschoenen</div>
       <img src='images/schoen_volleybal.png' alt='Volleybalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€45,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€45,00</div></div>
     </div>
 
     <div class='card tennis'>
-      <div class='card-header'>Tennis</div>
+      <div class='card-header'>Tennisschoenen</div>
       <img src='images/schoen_tennis.png' alt='Tennisschoenen'>
-      <div class='card-body'>
-        <div class='price'>€50,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€50,00</div></div>
     </div>
 
     <div class='card voetbal'>
-      <div class='card-header'>Voetbal</div>
+      <div class='card-header'>Voetbalschoenen</div>
       <img src='images/schoen_voetbal.png' alt='Voetbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€60,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€60,00</div></div>
     </div>
 
     <div class='card basketbal'>
-      <div class='card-header'>Basketbal</div>
+      <div class='card-header'>Basketbalschoenen</div>
       <img src='images/schoen_basketbal.png' alt='Basketbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€70,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€70,00</div></div>
     </div>
 
     <div class='card honkbal'>
-      <div class='card-header'>Honkbal</div>
+      <div class='card-header'>Honkbalschoenen</div>
       <img src='images/schoen_honkbal.png' alt='Honkbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€100,00</div>
-      </div>
+      <div class='card-body'><div class='price'>€100,00</div></div>
     </div>
 
   </div>
