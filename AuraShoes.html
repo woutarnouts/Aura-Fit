@@ -2,124 +2,132 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>AuraShoes - Varianten</title>
+  <title>AuraShoes - Aurafit</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f7; }
-    header { background: white; padding: 20px; text-align: center; border-bottom: 1px solid #ddd; }
-    nav a { margin: 0 10px; color: #1e3a8a; text-decoration: none; }
-    .container { max-width: 1200px; margin: auto; padding: 30px; }
-    h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
-    table { border-collapse: collapse; width: 100%; background: white; margin-bottom: 40px; }
-    td, th { border: 1px solid #ddd; padding: 10px; }
-    th { background: #1e3a8a; color: white; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
-    .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; text-align: center; transition: transform 0.2s; }
-    .card:hover { transform: translateY(-4px); }
-    .card-header { padding: 16px; color: white; font-weight: bold; font-size: 1.1em; }
-    .card img { width: 100%; height: 220px; object-fit: cover; display: block; }
-    .card-body { padding: 16px; }
-    .card-body .price { font-size: 1.3em; font-weight: bold; margin-top: 8px; margin-bottom: 12px; }
-    .size-select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; color: #111; margin-bottom: 10px; }
-    .add-btn { display: block; width: 100%; background: #1e3a8a; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.95em; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f7f7f7; color: #111; }
+    header { background: #0a0a0a; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #1e3a8a; position: sticky; top: 0; z-index: 100; }
+    .header-logo img { height: 50px; width: 50px; object-fit: contain; }
+    nav a { margin: 0 12px; color: #aab4d4; text-decoration: none; font-weight: bold; }
+    nav a:hover { color: white; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .retour-btn { background: #374151; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; }
+    .cart-btn { background: #1e3a8a; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 1em; position: relative; }
+    .cart-btn .badge { background: #e11d48; color: white; border-radius: 50%; font-size: 0.7em; padding: 2px 6px; position: absolute; top: -6px; right: -6px; }
+    .cart-overlay { display: none; position: fixed; top: 0; right: 0; width: 350px; height: 100%; background: white; box-shadow: -4px 0 20px rgba(0,0,0,0.2); z-index: 200; padding: 24px; overflow-y: auto; }
+    .cart-overlay.open { display: block; }
+    .cart-overlay h2 { color: #1e3a8a; margin-bottom: 20px; }
+    .cart-close { float: right; background: none; border: none; font-size: 1.5em; cursor: pointer; color: #888; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; gap: 8px; }
+    .cart-item span { font-size: 0.9em; flex: 1; }
+    .cart-item button { background: #e11d48; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #1e3a8a; color: white; border: none; border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+    .qty-num { min-width: 20px; text-align: center; font-size: 0.9em; }
+    .cart-total { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: right; }
+    .cart-checkout { display: block; width: 100%; margin-top: 16px; background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1em; cursor: pointer; }
+    .cart-empty { color: #888; text-align: center; margin-top: 40px; }
+    .page-hero { background: #0a0a0a; color: white; padding: 40px 20px; text-align: center; border-bottom: 3px solid #1e3a8a; }
+    .page-hero h1 { font-size: 2em; letter-spacing: 4px; margin-bottom: 8px; }
+    .page-hero p { color: #aab4d4; }
+    .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
+    .section-title { color: #1e3a8a; font-size: 1.4em; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+    .variant-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 40px; }
+    .variant-table th { background: #1e3a8a; color: white; padding: 12px 16px; text-align: left; font-size: 0.95em; }
+    .variant-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.95em; vertical-align: middle; }
+    .variant-table tr:last-child td { border-bottom: none; }
+    .variant-table tr:hover td { background: #f0f4ff; }
+    .size-row { display: flex; align-items: center; gap: 8px; }
+    .size-select { padding: 7px 10px; border: 1px solid #ccc; border-radius: 7px; font-size: 0.9em; color: #111; }
+    .add-btn { background: #1e3a8a; color: white; border: none; padding: 8px 16px; border-radius: 7px; cursor: pointer; font-size: 0.9em; white-space: nowrap; }
     .add-btn:hover { background: #1e40af; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.2s; text-align: center; }
+    .card:hover { transform: translateY(-4px); }
+    .card-header { padding: 14px; color: white; font-weight: bold; font-size: 1.1em; }
+    .card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .card-body { padding: 16px; }
+    .price { font-size: 1.3em; font-weight: bold; color: #1e3a8a; margin: 8px 0 10px; }
+    .card-size-select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; margin-bottom: 10px; }
+    .card-add-btn { display: block; width: 100%; background: #1e3a8a; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.95em; }
+    .card-add-btn:hover { background: #1e40af; }
     .loopschoenen .card-header { background: #6b7280; }
-    .volleybal    .card-header { background: #ca8a04; }
-    .tennis       .card-header { background: #16a34a; }
-    .voetbal      .card-header { background: #e11d48; }
-    .basketbal    .card-header { background: #ea580c; }
-    .honkbal      .card-header { background: #1e3a8a; }
-    .loopschoenen .price { color: #6b7280; }
-    .volleybal    .price { color: #ca8a04; }
-    .tennis       .price { color: #16a34a; }
-    .voetbal      .price { color: #e11d48; }
-    .basketbal    .price { color: #ea580c; }
-    .honkbal      .price { color: #1e3a8a; }
+    .volleybal .card-header { background: #ca8a04; }
+    .tennis .card-header { background: #16a34a; }
+    .voetbal .card-header { background: #e11d48; }
+    .basketbal .card-header { background: #ea580c; }
+    .honkbal .card-header { background: #1e3a8a; }
+    footer { background: #0a0a0a; color: #aab4d4; text-align: center; padding: 30px; margin-top: 60px; font-size: 0.9em; }
+    footer img { height: 40px; width: 40px; object-fit: contain; display: block; margin: 0 auto 10px; }
   </style>
 </head>
 <body>
 <header>
-  <h1>AuraShoes</h1>
+  <div class='header-logo'><img src='images/images.logo.png' alt='Aurafit logo'></div>
   <nav><a href='index.html'>← Terug naar home</a></nav>
+  <div class='header-actions'>
+    <a class='retour-btn' href='retour.html'>↺ Retour</a>
+    <button class='cart-btn' onclick='toggleCart()'>🛒 Winkelmandje <span class='badge' id='cart-count'>0</span></button>
+  </div>
 </header>
+
+<div class='cart-overlay' id='cart-overlay'>
+  <button class='cart-close' onclick='toggleCart()'>✕</button>
+  <h2>🛒 Winkelmandje</h2>
+  <div class='cart-items' id='cart-items'><p class='cart-empty'>Je winkelmandje is leeg.</p></div>
+  <div class='cart-total' id='cart-total'></div>
+  <button class='cart-checkout' onclick='checkout()'>Afrekenen</button>
+</div>
+
+<div class='page-hero'>
+  <h1>👟 AURASHOES</h1>
+  <p>Sportschoenen voor elk sport — kies jouw type en maat</p>
+</div>
+
 <div class='container'>
-  <h2>Varianten</h2>
-  <table>
-    <tr><th>Variant</th><th>Prijs</th></tr>
-    <tr><td>Loopschoenen</td><td>€40,00</td></tr>
-    <tr><td>Volleybalschoenen</td><td>€45,00</td></tr>
-    <tr><td>Tennisschoenen</td><td>€50,00</td></tr>
-    <tr><td>Voetbalschoenen</td><td>€60,00</td></tr>
-    <tr><td>Basketbalschoenen</td><td>€70,00</td></tr>
-    <tr><td>Honkbalschoenen</td><td>€100,00</td></tr>
+  <h2 class='section-title'>Alle varianten</h2>
+  <table class='variant-table'>
+    <thead><tr><th>Type</th><th>Prijs</th></tr></thead>
+    <tbody>
+      <tr><td>Loopschoenen</td><td>€40,00</td></tr>
+      <tr><td>Volleybalschoenen</td><td>€45,00</td></tr>
+      <tr><td>Tennisschoenen</td><td>€50,00</td></tr>
+      <tr><td>Voetbalschoenen</td><td>€60,00</td></tr>
+      <tr><td>Basketbalschoenen</td><td>€70,00</td></tr>
+      <tr><td>Honkbalschoenen</td><td>€100,00</td></tr>
+    </tbody>
   </table>
+
+  <h2 class='section-title'>Bekijk per type</h2>
   <div class='grid'>
-    <div class='card loopschoenen'>
-      <div class='card-header'>Loopschoenen</div>
-      <img src='images/schoen_loop.png' alt='Loopschoenen'>
-      <div class='card-body'>
-        <div class='price'>€40,00</div>
-        <select class='size-select' id='size-loop'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Loopschoenen", 40, "size-loop")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
-    <div class='card volleybal'>
-      <div class='card-header'>Volleybalschoenen</div>
-      <img src='images/schoen_volleybal.png' alt='Volleybalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€45,00</div>
-        <select class='size-select' id='size-volleybal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Volleybalschoenen", 45, "size-volleybal")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
-    <div class='card tennis'>
-      <div class='card-header'>Tennisschoenen</div>
-      <img src='images/schoen_tennis.png' alt='Tennisschoenen'>
-      <div class='card-body'>
-        <div class='price'>€50,00</div>
-        <select class='size-select' id='size-tennis'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Tennisschoenen", 50, "size-tennis")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
-    <div class='card voetbal'>
-      <div class='card-header'>Voetbalschoenen</div>
-      <img src='images/schoen_voetbal.png' alt='Voetbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€60,00</div>
-        <select class='size-select' id='size-voetbal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Voetbalschoenen", 60, "size-voetbal")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
-    <div class='card basketbal'>
-      <div class='card-header'>Basketbalschoenen</div>
-      <img src='images/schoen_basketbal.png' alt='Basketbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€70,00</div>
-        <select class='size-select' id='size-basketbal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Basketbalschoenen", 70, "size-basketbal")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
-    <div class='card honkbal'>
-      <div class='card-header'>Honkbalschoenen</div>
-      <img src='images/schoen_honkbal.png' alt='Honkbalschoenen'>
-      <div class='card-body'>
-        <div class='price'>€100,00</div>
-        <select class='size-select' id='size-honkbal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select>
-        <button class='add-btn' onclick='addToCart("Schoenen Honkbalschoenen", 100, "size-honkbal")'>+ Voeg toe aan mandje</button>
-      </div>
-    </div>
+    <div class='card loopschoenen'><div class='card-header'>Loopschoenen</div><img src='images/schoen_loop.png' alt='Loopschoenen'><div class='card-body'><div class='price'>€40,00</div><select class='card-size-select' id='cs-loop'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Loopschoenen',40,'cs-loop')">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card volleybal'><div class='card-header'>Volleybalschoenen</div><img src='images/schoen_volleybal.png' alt='Volleybal'><div class='card-body'><div class='price'>€45,00</div><select class='card-size-select' id='cs-vball'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Volleybalschoenen',45,'cs-vball')">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card tennis'><div class='card-header'>Tennisschoenen</div><img src='images/schoen_tennis.png' alt='Tennis'><div class='card-body'><div class='price'>€50,00</div><select class='card-size-select' id='cs-tennis'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Tennisschoenen',50,'cs-tennis')">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card voetbal'><div class='card-header'>Voetbalschoenen</div><img src='images/schoen_voetbal.png' alt='Voetbal'><div class='card-body'><div class='price'>€60,00</div><select class='card-size-select' id='cs-voetbal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Voetbalschoenen',60,'cs-voetbal')">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card basketbal'><div class='card-header'>Basketbalschoenen</div><img src='images/schoen_basketbal.png' alt='Basketbal'><div class='card-body'><div class='price'>€70,00</div><select class='card-size-select' id='cs-bball'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Basketbalschoenen',70,'cs-bball')">+ Voeg toe aan winkelmandje</button></div></div>
+    <div class='card honkbal'><div class='card-header'>Honkbalschoenen</div><img src='images/schoen_honkbal.png' alt='Honkbal'><div class='card-body'><div class='price'>€100,00</div><select class='card-size-select' id='cs-honkbal'><option value=''>— Kies maat —</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select><button class='card-add-btn' onclick="addWithSize('Schoenen Honkbalschoenen',100,'cs-honkbal')">+ Voeg toe aan winkelmandje</button></div></div>
   </div>
 </div>
+
+<footer><img src='images/images.logo.png' alt='Aurafit logo'><p>© 2026 Aurafit — Alle rechten voorbehouden</p></footer>
 <script>
-  function addToCart(product, price, sizeId) {
-    const size = document.getElementById(sizeId).value;
-    if (!size) { alert('Kies eerst een maat!'); return; }
-    let cart = JSON.parse(localStorage.getItem('aurafit-cart') || '[]');
-    const name = product + ' (maat ' + size + ')';
-    const existing = cart.find(i => i.name === name);
-    if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
-    localStorage.setItem('aurafit-cart', JSON.stringify(cart));
-    alert(name + ' toegevoegd aan je mandje! 🛒');
+  let cart = JSON.parse(localStorage.getItem('aurafit-cart') || '[]');
+  function saveCart(){ localStorage.setItem('aurafit-cart', JSON.stringify(cart)); }
+  function addToCart(name, price){ const ex=cart.find(i=>i.name===name); if(ex){ex.qty++;}else{cart.push({name,price,qty:1});} saveCart();updateCart();document.getElementById('cart-overlay').classList.add('open'); }
+  function addWithSize(base, price, sizeId){ const size=document.getElementById(sizeId).value; if(!size){alert('Kies eerst een maat!');return;} addToCart(base+' (maat '+size+')', price); }
+  function removeFromCart(i){ cart.splice(i,1);saveCart();updateCart(); }
+  function changeQty(i,d){ cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart();updateCart(); }
+  function updateCart(){
+    const count=cart.reduce((a,i)=>a+i.qty,0);
+    document.getElementById('cart-count').textContent=count;
+    const c=document.getElementById('cart-items');
+    if(cart.length===0){c.innerHTML="<p class='cart-empty'>Je winkelmandje is leeg.</p>";document.getElementById('cart-total').textContent='';return;}
+    c.innerHTML=cart.map((item,i)=>`<div class='cart-item'><span>${item.name}</span><div class='qty-controls'><button class='qty-btn' onclick='changeQty(${i},-1)'>−</button><span class='qty-num'>${item.qty}</span><button class='qty-btn' onclick='changeQty(${i},1)'>+</button></div><span>€${(item.price*item.qty).toFixed(2)}</span><button onclick='removeFromCart(${i})'>✕</button></div>`).join('');
+    document.getElementById('cart-total').textContent='Totaal: €'+cart.reduce((a,i)=>a+i.price*i.qty,0).toFixed(2);
   }
+  function toggleCart(){ document.getElementById('cart-overlay').classList.toggle('open'); }
+  function checkout(){ if(cart.length===0){alert('Je winkelmandje is leeg!');return;} localStorage.setItem('aurafit-last-order',JSON.stringify(cart));alert('Bedankt voor je bestelling! 🎉');cart=[];saveCart();updateCart();document.getElementById('cart-overlay').classList.remove('open'); }
+  updateCart();
 </script>
 </body>
 </html>
