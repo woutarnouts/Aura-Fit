@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Retour - Aurafit</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f7f7f7; color: #111; }
+
+    header {
+      background: #0a0a0a;
+      padding: 12px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #1e3a8a;
+    }
+    .header-logo span { color: white; font-size: 1.6em; font-weight: bold; letter-spacing: 4px; }
+    nav a { color: #aab4d4; text-decoration: none; font-weight: bold; }
+    nav a:hover { color: white; }
+
+    .container { max-width: 700px; margin: 50px auto; padding: 0 20px; }
+    h1 { color: #1e3a8a; font-size: 1.8em; margin-bottom: 10px; }
+    p.sub { color: #555; margin-bottom: 30px; }
+
+    .order-box {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+    .order-box h2 { color: #1e3a8a; margin-bottom: 16px; font-size: 1.1em; }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .order-item:last-child { border-bottom: none; }
+    .order-item input[type='checkbox'] { width: 18px; height: 18px; accent-color: #1e3a8a; cursor: pointer; }
+    .order-item label { flex: 1; font-size: 0.95em; cursor: pointer; }
+    .order-item .item-price { color: #888; font-size: 0.9em; }
+
+    .empty-msg { color: #888; text-align: center; padding: 20px 0; }
+
+    .reason-box { margin-top: 24px; }
+    .reason-box label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; }
+    .reason-box select, .reason-box textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95em;
+      color: #111;
+      margin-bottom: 16px;
+    }
+    .reason-box textarea { height: 100px; resize: vertical; }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .submit-btn:hover { background: #1e40af; }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+    .success-msg {
+      display: none;
+      background: #dcfce7;
+      border: 1px solid #16a34a;
+      color: #15803d;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    footer { background: #0a0a0a; color: #aab4d4; text-align: center; padding: 30px; margin-top: 60px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">
+    <span>AURAFIT</span>
+  </div>
+  <nav>
+    <a href='index.html'>← Terug naar home</a>
+  </nav>
+</header>
+
+<div class='container'>
+  <h1>Retour aanvragen</h1>
+  <p class='sub'>Selecteer de producten die je wil retourneren uit je laatste bestelling.</p>
+
+  <div class='order-box'>
+    <h2>Jouw laatste bestelling</h2>
+    <div id='order-items'></div>
+  </div>
+
+  <div class='order-box reason-box' id='reason-box' style='display:none;'>
+    <label for='reason'>Reden van retour</label>
+    <select id='reason'>
+      <option value=''>— Selecteer een reden —</option>
+      <option value='past niet'>Past niet</option>
+      <option value='verkeerd product'>Verkeerd product ontvangen</option>
+      <option value='beschadigd'>Product beschadigd</option>
+      <option value='niet tevreden'>Niet tevreden</option>
+      <option value='anders'>Anders</option>
+    </select>
+
+    <label for='opmerking'>Opmerking (optioneel)</label>
+    <textarea id='opmerking' placeholder='Geef hier extra informatie...'></textarea>
+
+    <button class='submit-btn' id='submit-btn' onclick='submitRetour()'>Retour indienen</button>
+  </div>
+
+  <div class='success-msg' id='success-msg'>
+    ✅ Je retour is ingediend! We nemen snel contact met je op.
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Aurafit — Alle rechten voorbehouden</p>
+</footer>
+
+<script>
+  const lastOrder = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
+  const container = document.getElementById('order-items');
+
+  if (lastOrder.length === 0) {
+    container.innerHTML = "<p class='empty-msg'>Geen eerdere bestelling gevonden.</p>";
+  } else {
+    lastOrder.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'order-item';
+      div.innerHTML = `
+        <input type='checkbox' id='item-${i}' value='${item.name}' onchange='checkSelection()'>
+        <label for='item-${i}'>${item.name} x${item.qty}</label>
+        <span class='item-price'>€${(item.price * item.qty).toFixed(2)}</span>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function checkSelection() {
+    const checked = document.querySelectorAll('input[type=checkbox]:checked');
+    document.getElementById('reason-box').style.display = checked.length > 0 ? 'block' : 'none';
+  }
+
+  function submitRetour() {
+    const checked = [...document.querySelectorAll('input[type=checkbox]:checked')].map(c => c.value);
+    const reason = document.getElementById('reason').value;
+    if (!reason) {
+      alert('Selecteer een reden voor de retour.');
+      return;
+    }
+    document.getElementById('reason-box').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
