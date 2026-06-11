@@ -40,10 +40,24 @@
       border-bottom: 1px solid #eee;
     }
     .order-item:last-child { border-bottom: none; }
-    .order-item input[type='checkbox'] { width: 18px; height: 18px; accent-color: #1e3a8a; cursor: pointer; }
+    .order-item input[type='checkbox'] { width: 18px; height: 18px; accent-color: #1e3a8a; cursor: pointer; flex-shrink: 0; }
     .order-item label { flex: 1; font-size: 0.95em; cursor: pointer; }
-    .order-item .item-price { color: #888; font-size: 0.9em; }
-    .qty-select { padding: 4px 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; color: #111; }
+    .order-item .item-price { color: #888; font-size: 0.9em; white-space: nowrap; }
+
+    .qty-select {
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.9em;
+      color: #111;
+      display: none;
+    }
+    .qty-label {
+      font-size: 0.85em;
+      color: #555;
+      display: none;
+      white-space: nowrap;
+    }
 
     .empty-msg { color: #888; text-align: center; padding: 20px 0; }
 
@@ -103,7 +117,7 @@
 
 <div class='container'>
   <h1>Retour aanvragen</h1>
-  <p class='sub'>Selecteer de producten die je wil retourneren uit je laatste bestelling.</p>
+  <p class='sub'>Vink de producten aan die je wil retourneren en kies het aantal.</p>
 
   <div class='order-box'>
     <h2>Jouw laatste bestelling</h2>
@@ -147,29 +161,34 @@
       return;
     }
     order.forEach((item, i) => {
-      const options = Array.from({length: item.qty}, (_, n) => `<option value='${n+1}' ${n===0?'selected':''}>${n+1}</option>`).join('');
+      // Build options 1..qty, default = 1
+      const options = Array.from({length: item.qty}, (_, n) =>
+        `<option value='${n+1}'>${n+1}</option>`
+      ).join('');
+
       const div = document.createElement('div');
       div.className = 'order-item';
       div.innerHTML = `
-        <input type='checkbox' id='item-${i}' data-index='${i}' data-name='${item.name}' data-qty='${item.qty}' onchange='checkSelection()'>
-        <label for='item-${i}'>${item.name} (${item.qty}x)</label>
-        <select class='qty-select' id='qty-${i}' style='display:none;'>
-          ${options}
-        </select>
+        <input type='checkbox' id='item-${i}' data-index='${i}' data-name='${item.name}' data-maxqty='${item.qty}' onchange='checkSelection(this)'>
+        <label for='item-${i}'>${item.name} <span style='color:#888;font-size:0.85em;'>(${item.qty}x besteld)</span></label>
+        <span class='qty-label' id='qty-label-${i}'>Aantal retour:</span>
+        <select class='qty-select' id='qty-${i}'>${options}</select>
         <span class='item-price'>€${(item.price * item.qty).toFixed(2)}</span>
       `;
       container.appendChild(div);
     });
   }
 
-  function checkSelection() {
-    const checkboxes = document.querySelectorAll('input[type=checkbox]');
-    checkboxes.forEach(cb => {
-      const qtySelect = document.getElementById('qty-' + cb.dataset.index);
-      if (qtySelect) qtySelect.style.display = cb.checked ? 'inline-block' : 'none';
-    });
-    const checked = document.querySelectorAll('input[type=checkbox]:checked');
-    document.getElementById('reason-box').style.display = checked.length > 0 ? 'block' : 'none';
+  function checkSelection(cb) {
+    const i = cb.dataset.index;
+    const qtySelect = document.getElementById('qty-' + i);
+    const qtyLabel = document.getElementById('qty-label-' + i);
+    const show = cb.checked;
+    qtySelect.style.display = show ? 'inline-block' : 'none';
+    qtyLabel.style.display = show ? 'inline-block' : 'none';
+
+    const anyChecked = document.querySelectorAll('input[type=checkbox]:checked').length > 0;
+    document.getElementById('reason-box').style.display = anyChecked ? 'block' : 'none';
   }
 
   function submitRetour() {
@@ -188,9 +207,7 @@
       const name = cb.dataset.name;
       const retourQty = parseInt(document.getElementById('qty-' + cb.dataset.index).value);
       const item = order.find(i => i.name === name);
-      if (item) {
-        item.qty -= retourQty;
-      }
+      if (item) item.qty -= retourQty;
     });
     order = order.filter(item => item.qty > 0);
     if (order.length === 0) {
