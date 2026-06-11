@@ -108,7 +108,7 @@
     <a href='#' onclick='toggleOverzicht(event)'>Producten</a>
   </nav>
   <div style='display:flex;gap:10px;align-items:center;'>
-    <a href='retour.html' style='background:#374151;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:1em;'>↺ Retour</a>
+    <a id='retour-btn' href='retour.html' style='background:#374151;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:1em;display:none;'>↺ Retour</a>
     <button class='cart-btn' onclick='toggleCart()'>
       🛒 Winkelmandje
       <span class='badge' id='cart-count'>0</span>
@@ -363,6 +363,13 @@
   }
 
   updateCart();
+
+  function updateRetourBtn() {
+    const lastOrder = JSON.parse(localStorage.getItem('aurafit-last-order') || '[]');
+    const btn = document.getElementById('retour-btn');
+    if (btn) btn.style.display = lastOrder.length > 0 ? 'inline-block' : 'none';
+  }
+  updateRetourBtn();
 
   function toggleOverzicht(e) {
     e.preventDefault();
