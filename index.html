@@ -285,7 +285,8 @@
 
 <footer>
   <img src='images/images.logo.png' alt='Aurafit logo'>
-  <p>© 2026 Aurafit — Alle rechten voorbehouden. We zijn een webshop voor een schoolopdracht en verkopen dus NIET de producten.</p>
+  <p>© 2026 Aurafit — Alle rechten voorbehouden</p>
+  <p style='margin-top:10px;'><a href='retour.html' style='color:#aab4d4;'>Retour aanvragen</a></p>
 </footer>
 
 <script>
@@ -350,6 +351,7 @@
       alert('Je winkelmandje is leeg!');
       return;
     }
+    localStorage.setItem('aurafit-last-order', JSON.stringify(cart));
     alert('Bedankt voor je bestelling! 🎉\nWe nemen snel contact op.');
     cart = [];
     saveCart();
